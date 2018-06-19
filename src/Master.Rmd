@@ -1,0 +1,597 @@
+---
+title: MasterPip
+authors: XC Morgan, X Wang
+output:
+  pdf_document: default
+---
+
+# Chunk 1 - Load libraries for further analyses
+```{r}
+library(ggplot2)
+library(phyloseq)
+library(plyr)
+library(vegan)
+library("biomformat")
+library(reshape2)
+library(ggpubr)
+library(ggvegan)
+library(ggordiplots)
+setwd("~/PIP2018/")
+
+set.seed(8675309)
+
+timecolors=c("#551A8B", "#FF4500", "#E69F00", "#E69F00")
+boolcolors=c("salmon", "turquoise4")
+```
+
+Chunk 2: Generation of PIP figures and tables
+```{r}
+#Piece of code for loading taxonomy.tsv / modules.pcl / pathways.pcl and calculating bad samples.
+#In our final version, let's calculate E. coli IQR for each age group, and filter samples with > 1.5 IQR for each age group.
+NZGL_taxonomy<-import_qiime_sample_data("~/PIP2018/primary_data/taxonomy.tsv")
+  # the imported taxonomy data should have each sample as a row and each variable or taxonomy as a column
+Taxonomy_filter_file<-NZGL_taxonomy # make a copy
+  #First make a plot of unfiltered taxonomy data, showing E coli abundance for each age group.
+NZGL_taxonomy$time<-as.factor(NZGL_taxonomy$time) # to separate boxplot by different age category, type of data used for x axis need to be factor
+### SEE PLOT 1: Supplemental 1: Abundance of E. coli x stratified by age in unfiltered data
+
+# Then filter those samples out of all data, and use these data for every downstream analysis.
+
+# select the useful part and find the interquartile range for E. coli, filter out samples that E. coli abundance is > 1.5 IQR
+Taxonomy_filter_file$E_coli<-NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli
+# Split the dataset by time/age
+E_coli_abundance_AtBirth<-subset(Taxonomy_filter_file, time==0)
+E_coli_abundance_3_month<-subset(Taxonomy_filter_file, time==3)
+E_coli_abundance_12_month<-subset(Taxonomy_filter_file, time==12)
+E_coli_abundance_24_month<-subset(Taxonomy_filter_file, time==24)
+# Calculate IQR by each time
+E_coli_abundance_IOR_AtBirth<-IQR(E_coli_abundance_AtBirth$E_coli)
+E_coli_abundance_IQR_3_month<-IQR(E_coli_abundance_3_month$E_coli)
+E_coli_abundance_IQR_12_month<-IQR(E_coli_abundance_12_month$E_coli)
+E_coli_abundance_IQR_24_month<-IQR(E_coli_abundance_24_month$E_coli)
+# Filter the whole dataset at each time on E.coli > 1.5IQR
+Taxonomy_filtered_AtBirth<-subset(E_coli_abundance_AtBirth, E_coli<=(1.5*E_coli_abundance_IOR_AtBirth))
+Taxonomy_filtered_3_month<-subset(E_coli_abundance_3_month, E_coli<=(1.5*E_coli_abundance_IQR_3_month))
+Taxonomy_filtered_12_month<-subset(E_coli_abundance_12_month, E_coli<=(1.5*E_coli_abundance_IQR_12_month))
+Taxonomy_filtered_24_month<-subset(E_coli_abundance_24_month, E_coli<=(1.5*E_coli_abundance_IQR_24_month))
+# a fully filtered data from each timepoint combined into one dataset
+Taxonomy_filtered<-rbind(Taxonomy_filtered_AtBirth,Taxonomy_filtered_3_month,Taxonomy_filtered_12_month,Taxonomy_filtered_24_month) 
+#write.csv(Taxonomy_filtered, "~/pip-resubmit/derived-data/taxonomy-filtered.csv")
+```
+
+Chunk3: Plots regarding the relationships between E. coli abundance & age, E. coli abundance & time at room temperature, and time of storage of samples (Sup 1)
+
+```{r}
+NZGL_taxonomy$time<-as.factor(NZGL_taxonomy$time) # to separate boxplot by different age category, type of data used for x axis need to be factor
+#Plot the Abundance of Escherichia at different time points
+a<-ggplot(NZGL_taxonomy, aes(time, NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli))+geom_boxplot()+ggtitle("Abundance of Escherichia at different ages")+xlab("Time Point")+ylab("Rel Abundance E. coli")
+Metadata<-read.csv("~/PIP2018/primary_data/metadata.csv", header = TRUE) # load csv file
+
+#Plot the Duration of storage of study fecal samples at room temperature before freezing
+Molten_Meta<-melt(Metadata, id.vars = "Studyid", measure.vars = c("ftime_0", "ftime_3", "ftime_12", "ftime_24")) # combine the four time variables into one.
+colnames(Molten_Meta)[2]<-"time"
+Molten_Meta$time<-as.character(Molten_Meta$time)
+Molten_Meta$time[Molten_Meta$time == "ftime_0"] <- "0"
+Molten_Meta$time[Molten_Meta$time == "ftime_3"] <- "3"
+Molten_Meta$time[Molten_Meta$time == "ftime_12"] <- "12"
+Molten_Meta$time[Molten_Meta$time == "ftime_24"] <- "24"
+Molten_Meta$time<-as.factor(Molten_Meta$time)
+
+IDs<-read.table("~/PIP2018/primary_data/ids.txt", header = TRUE)
+colnames(IDs)[2]<-"Studyid"
+colnames(IDs)[3]<-"time"
+
+Taxonomy<-import_qiime_sample_data("~/PIP2018/primary_data/taxonomy.tsv")
+Taxonomy<-Taxonomy[,c(-1)]
+select.var<-c("time", "Studyid", "k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia")
+Escherichia<-Taxonomy[,select.var]
+Escherichia<-as.data.frame(Escherichia) # converting columns into rows 
+
+Escherichia$Otago.ID<-row.names(Escherichia) # assign otago.id to the dataset
+Escherichia_ID<-merge(Escherichia, IDs, by=c("Otago.ID","Studyid","time"))
+summary(Escherichia_ID)
+Escherichia_Meta<-merge(Escherichia_ID, Molten_Meta, by=c("Studyid","time"))
+colnames(Escherichia_Meta)[4]<-"Escherichia_growth"
+colnames(Escherichia_Meta)[5]<-"Measurement_of_time"
+
+b<-ggplot(Escherichia_Meta, aes(Measurement_of_time))+geom_histogram(stat = "bin", binwidth=5)+xlim(0,250) +ylab("# samples") + xlab("Minutes") + ggtitle("Sample time at room temperature")
+
+c<-ggplot(Escherichia_Meta, aes(color=factor(time), x=Measurement_of_time, y=Escherichia_growth)) +  geom_jitter(width = 0.25, height = 0.5) +  xlab("Time at room temperature") + ylab("Rel. abundance E. coli")
+
+ggarrange(a, b, c, labels=c("A", "B", "C", "D"), ncol=2, nrow=2)
+
+ggsave("~/PIP2018/results/SupFig1.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+
+
+```
+
+
+
+
+
+Color code for the four chosen colors are:
+12_month: yellow (#E69F00)
+24_month: light blue(#56B4E9)
+3_month: bright orange(#FF4500)
+At Birth(AB): dark purple (#551A8B)
+
+Chunk4: Generate Figure 2:
+```{r}
+  # remove the metadata part and left only taxonomy abundance data
+Taxonomy_filtered_num<-Taxonomy_filtered[,c(-1:-28)]
+  # to solve the -infinity problem when logging, add a small value to all datapoint that is 0
+Taxonomy_filtered_num[Taxonomy_filtered_num==0]<-10e-8
+
+# 1) log10 and normalise the taxonomy abundance
+Log10_Taxonomy_filtered_num<-sapply(Taxonomy_filtered_num, function(x) log10(as.numeric(as.character(x))))
+row.names(Log10_Taxonomy_filtered_num)<-row.names(Taxonomy_filtered_num)
+Norm_log10_abundance<-as.data.frame(scale(Log10_Taxonomy_filtered_num))
+
+
+# 2) Glom to genera
+  ## select any taxo names that the taxo has reached genus level
+Norm_filtered_taxonomy_abundance_select<-Norm_log10_abundance[,grep("g__",colnames(Norm_log10_abundance))]
+  ## select any taxo names that has reached species level
+NZGL_taxonomy_select_t_col<-colnames(Norm_log10_abundance[,grep("s__",colnames(Norm_log10_abundance))])
+  ## select rows that has reached genus level but not species level
+Norm_filtered_taxonomy_g<-Norm_filtered_taxonomy_abundance_select[,setdiff(colnames(Norm_filtered_taxonomy_abundance_select),NZGL_taxonomy_select_t_col)]
+  ## Only select genera that have data
+Genera_sum<-as.data.frame(apply(Norm_filtered_taxonomy_g, 2, sum))
+colnames(Genera_sum)<-"sum"
+Genera_sum<-subset(Genera_sum, Genera_sum$sum!=0)
+Genera<-rownames(Genera_sum)
+
+
+# 3) Fit each genus to the linear model model<-lm(bug~time,data=bugdata) 
+  ## assign time for linear model
+Norm_filtered_taxonomy_g$time<-Taxonomy_filtered$time[match(rownames(Norm_filtered_taxonomy_g), Taxonomy_filtered$Sample)]
+  ## create an empty dataframe for saving the estimates and p-values
+temp<-NULL
+T1<-list()
+  ## Linear model for each genus, this only apply to genus has meaningful data (Not 0)
+for (a in Genera) {
+  T<-summary(lm(Norm_filtered_taxonomy_g[,a]~Norm_filtered_taxonomy_g$time))
+  T2<-as.data.frame(t(T[[4]][2,]))
+  T2$taxo<-colnames(Norm_filtered_taxonomy_g[a])
+  T1[[a]]<-T2
+  temp<-do.call(rbind, T1)
+}
+  ## Reduce the length of taxo names to leave only genera names
+temp$taxo_trim<-gsub("k__\\D+.p__\\D+.c\\D+.o\\D+.f__\\D+.g__(\\D+)", "\\1", temp$taxo)
+# sort taxo column by the correspondance estimate values to make figure visually vetter
+temp$taxo_trim<-factor(temp$taxo_trim, levels = temp$taxo_trim[order(temp$Estimate)])
+
+#keep<-subset(temp, temp$`Pr(>|t|)` <= 0.05)
+#write.csv(keep, file="~/PIP2018/results/suptable2-bugs.csv")
+
+# 4) For each bug genus x time, calculate its mean
+  ## Figure out the most abundant genera
+  ## Select any taxo names that has reached genus level
+taxonomy_abundance_select<-Taxonomy_filtered_num[,grep("g__",colnames(Taxonomy_filtered_num))]
+  ## select any taxo names that has reached species level
+taxonomy_select_t_col<-Taxonomy_filtered_num[,grep("s__",colnames(Taxonomy_filtered_num))]
+  ## substract taxonomy_select_t_col from taxonomy_abundance_select
+taxonomy_genera<-taxonomy_abundance_select[,setdiff(colnames(taxonomy_abundance_select),colnames(taxonomy_select_t_col))]
+genera<-taxonomy_genera
+  ## summarise dataset to get mean abundance for each genus
+taxonomy_genera_sum1<-as.data.frame(sort(-apply(taxonomy_genera, 2, mean)))
+  ## choose taxa based on the top 40 by mean
+top_abundant_40_dataset<-temp[match(row.names(taxonomy_genera_sum1)[1:40], temp$taxo),]
+top_abundant_40_dataset$taxo_trim<-factor(top_abundant_40_dataset$taxo_trim, levels = top_abundant_40_dataset$taxo_trim[order(top_abundant_40_dataset$Estimate)])
+
+  ## save the genera names for further use
+T40_genera<-row.names(top_abundant_40_dataset)
+
+  ## find out which timepoint the taxa is most abundant for the top 40 genera
+  ## make a copy of the dataset need for the analyses
+test<-Taxonomy_filtered
+  # separate the dataset by timepoint
+test_AB<-subset(test, time==0)
+test_3m<-subset(test, time==3)
+test_12m<-subset(test, time==12)
+test_24m<-subset(test, time==24)
+  ## find out the mean abundance for genera at each time point
+test_AB_mean<-as.data.frame(-apply(test_AB[,c(-1:-28)], 2, mean))
+colnames(test_AB_mean)<-"AB"
+test_3m_mean<-as.data.frame(-apply(test_3m[,c(-1:-28)], 2, mean))
+colnames(test_3m_mean)<-"3month"
+test_12m_mean<-as.data.frame(-apply(test_12m[,c(-1:-28)], 2, mean))
+colnames(test_12m_mean)<-"12month"
+test_24m_mean<-as.data.frame(-apply(test_24m[,c(-1:-28)], 2, mean))
+colnames(test_24m_mean)<-"24month"
+  ## find out which taxa is most abundant for the 40 genera
+  ## combine dataset for comparison
+test_mean_alltime<-cbind(test_AB_mean,test_3m_mean,test_12m_mean,test_24m_mean)
+test_mean_alltime<-(-test_mean_alltime) # get rid of the minus sign I added before
+  ## compare and pick up the time point with maximun mean for each genus (for coding, that means for each row, return the column name of the largest value)
+##======This piece of code should be used very carefully, due to the ties.method
+  test_mean_alltime$max_time_randome<-colnames(test_mean_alltime)[max.col(test_mean_alltime)]
+  test_mean_alltime$max_time_first<-colnames(test_mean_alltime[,1:4])[max.col(test_mean_alltime[,1:4], ties.method="first")]
+  test_mean_alltime$max_time_last<-colnames(test_mean_alltime[,1:4])[max.col(test_mean_alltime[,1:4], ties.method="last")]
+  ##==== Had a look and using all three methods gave the same result, passed the checking
+  # choose the 40 genera we are interested and assign this to top_abundant_40_dataset(data for figure) 
+top_abundant_40_dataset$max_time<-test_mean_alltime$max_time_randome[match(row.names(top_abundant_40_dataset), row.names(test_mean_alltime))]
+top_abundant_40_dataset$max_time<-as.factor(top_abundant_40_dataset$max_time)
+
+ggplot(top_abundant_40_dataset, aes(taxo_trim, Estimate, color=max_time)) + geom_errorbar(aes(ymin=top_abundant_40_dataset$Estimate-top_abundant_40_dataset$`Std. Error`, ymax=top_abundant_40_dataset$Estimate+top_abundant_40_dataset$`Std. Error`,width=.3)) + geom_point(shape=21, size=1, fill="white") + theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 10), legend.position="top")+ geom_hline(aes(yintercept=0), colour="black", linetype="dashed")+ylim(-0.1,0.1)+ scale_color_manual(values=c("#E69F00", "#56B4E9", "#FF4500","#551A8B"))
+
+ggsave("~/PIP2018/results/Fig2A.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+```
+
+Chunk5: Generate Figure 2B
+```{r}
+Module<-import_qiime_sample_data("~/PIP2018/primary_data/modules.pcl")
+Module<-as.data.frame(t(Module))
+# filter out the samples that have E.coli>1.5 IQR based on the the filtered taxonomy file
+Module_filtered<-Module[rownames(Module)%in%Taxonomy_filtered$Sample,]
+Module_filtered_num<-Module_filtered[,c(-1:-27)]
+# now all the data are factors need to change them to numbers
+Module_filtered_num[]<- lapply(Module_filtered_num, function(x){as.numeric(as.character(x))})
+# add a small number to data where 0 could cause error for analyses
+Module_filtered_num[Module_filtered_num==0]<-10e-8
+# log and normalise data
+Log10_Module_filtered_num<-sapply(Module_filtered_num, function(x) log10(x))
+row.names(Log10_Module_filtered_num)<-row.names(Module_filtered_num)
+Norm_log10_Module_abundance<-as.data.frame(scale(Log10_Module_filtered_num))
+
+
+# select the modules that contain data
+M_names<-as.data.frame(apply(Norm_log10_Module_abundance, 2, sum))
+colnames(M_names)<-"sum"
+M_names<-subset(M_names, M_names$sum!=0)
+M_names<-rownames(M_names)
+
+# assign time
+Norm_log10_Module_abundance$time<-Taxonomy_filtered$time[match(rownames(Norm_log10_Module_abundance), Taxonomy_filtered$Sample)]
+# create an empty file for saving the results later
+Module_rainbow<-NULL
+T1<-list()
+  ## Linear model for each genus, this only apply to genus has meaningful data (Not 0)
+for (a in M_names) {
+  T<-summary(lm(Norm_log10_Module_abundance[,a]~Norm_log10_Module_abundance$time))
+  T2<-as.data.frame(t(T[[4]][2,]))
+  T2$module<-colnames(Norm_log10_Module_abundance[a])
+  T1[[a]]<-T2
+  Module_rainbow<-do.call(rbind, T1)
+}
+
+# rainbow version of module*time, ordered by Estimate value
+Module_rainbow$module<-factor(Module_rainbow$module, levels = Module_rainbow$module[order(Module_rainbow$Estimate)])
+
+
+# module*time, ordered by Estimate value and colored by most abundant timepoint/age
+  # Find out the for each module, the max mean abundance timpoint/age
+    # Note that I used the original value instead of the log normalised value
+module_AB<-subset(Module_filtered, time==0)
+module_AB<-module_AB[,c(-1:-27)]
+module_AB[]<-lapply(module_AB,  function(x){as.numeric(as.character(x))})
+
+module_3m<-subset(Module_filtered, time==3)
+module_3m<-module_3m[,c(-1:-27)]
+module_3m[]<-lapply(module_3m, function(x){as.numeric(as.character(x))})
+module_12m<-subset(Module_filtered, time==12)
+module_12m<-module_12m[,c(-1:-27)]
+module_12m[]<-lapply(module_12m, function(x){as.numeric(as.character(x))})
+module_24m<-subset(Module_filtered, time==24)
+module_24m<-module_24m[,c(-1:-27)]
+module_24m[]<-lapply(module_24m, function(x){as.numeric(as.character(x))})
+  ## find out the mean abundance for genera at each time point
+module_AB_mean<-as.data.frame(apply(module_AB, 2, mean))
+colnames(module_AB_mean)<-"AB"
+module_3m_mean<-as.data.frame(apply(module_3m, 2, mean))
+colnames(module_3m_mean)<-"3month"
+module_12m_mean<-as.data.frame(apply(module_12m, 2, mean))
+colnames(module_12m_mean)<-"12month"
+module_24m_mean<-as.data.frame(apply(module_24m, 2, mean))
+colnames(module_24m_mean)<-"24month"
+module_all_time<-cbind(module_AB_mean, module_3m_mean, module_12m_mean, module_24m_mean)
+module_all_time$maxtime<-colnames(module_all_time)[apply(module_all_time,1,which.max)]
+
+# assign the maxitime to Module_rainbow
+Module_rainbow$maxtime<-module_all_time$maxtime[match(rownames(Module_rainbow),rownames(module_all_time))]
+
+# for Module_filtered_num file before adding the fake 1e-7,
+  # calculate module presence in all samples
+Module_filtered_num1<-Module_filtered[,c(-1:-27)]
+Module_filtered_num1[]<- lapply(Module_filtered_num1, function(x){as.numeric(as.character(x))})
+module_presence<-NULL
+for (i in 1:ncol(Module_filtered_num1)) {
+  # create a temp file. For each column/module, calculate the module presence
+  temp<-length(Module_filtered_num1[Module_filtered_num1[,i]>0,i])/nrow(Module_filtered_num1)
+  module_presence<-rbind(module_presence, temp)
+}
+  module_presence<-as.data.frame(module_presence)
+  colnames(module_presence)<-"Module_presence"
+  module_presence$module<-colnames(Module_filtered_num1)
+  rownames(module_presence)<-NULL
+# select the modules that have presence higher than 10%
+Abundant_module_presence<-module_presence[module_presence$Module_presence>=0.1,]
+Abundant_presence_module_filtered<-Module_filtered_num1[,Abundant_module_presence$module]# 100 modules left after the presence filtering
+# calculate and select the top 40 abundant modules from the module*time figure made for all modules
+Top_40_abundant_module_names<-as.data.frame(sort(apply(Abundant_presence_module_filtered, 2, mean), decreasing = TRUE))
+Top_40_abundant_module_names$module<-rownames(Top_40_abundant_module_names)
+Top_40_abundant_module_names<-as.data.frame(Top_40_abundant_module_names[1:40,])
+Top_40_abundant_modules<-Module_rainbow[Module_rainbow$module%in%c(rownames(Top_40_abundant_module_names)),]
+
+# plot the top 40 modules 
+ggplot(Top_40_abundant_modules, aes(module, Estimate,colour=maxtime))+geom_line()+geom_errorbar(aes(ymin=Top_40_abundant_modules$Estimate-Top_40_abundant_modules$`Std. Error`, ymax=Top_40_abundant_modules$Estimate+Top_40_abundant_modules$`Std. Error`, width=.3))+geom_point(shape=21, size=1, fill="white")+theme_bw()+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 8), legend.position="top")+geom_hline(aes(yintercept=0), colour="black", linetype="dashed")+ylim(-0.1,0.1)+ scale_color_manual(values=c("#E69F00", "#56B4E9", "#FF4500","#551A8B"))
+
+ggsave("~/PIP2018/results/Fig2B.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+
+
+#write.csv(Module_filtered, "~/pip-resubmit/derived-data/modules-filtered.csv")
+```
+Chunk6: Filter pathways the same way modules & taxa were filtered
+```{r}
+Pathways<-import_qiime_sample_data("~/PIP2018/primary_data/pathways.pcl")
+Pathways<-as.data.frame(t(Pathways))
+# filter out the samples that have E.coli>1.5 IQR based on the the filtered taxonomy file
+Pathways_filtered<-Pathways[rownames(Pathways)%in%Taxonomy_filtered$Sample,]
+#write.csv(Pathways_filtered, "~/pip-resubmit/derived-data/pathways-filtered.csv")
+```
+Chunk7: Make Figure 1 - Time & c-section stratified by time
+```{r}
+
+# Create genera with no pseudocounts
+
+# remove the metadata part and left only taxonomy abundance data
+Taxonomy_filtered_num<-Taxonomy_filtered[,c(-1:-28)]
+g1<-Taxonomy_filtered_num[,grep("g__",colnames(Taxonomy_filtered_num))]
+  ## select any taxo names that has reached species level
+g2<-colnames(Taxonomy_filtered_num[,grep("s__",colnames(Taxonomy_filtered_num))])
+  ## select rows that has reached genus level but not species level
+my_genera<-Taxonomy_filtered_num[,setdiff(colnames(g1),g2)]
+
+
+#Are c-section, time, eczema, studygroup significant contributors to beta diversity? (in full data)
+taxonomy_genera<-my_genera
+meta<-Taxonomy_filtered[,1:28]
+meta<-as.data.frame(as.matrix(meta))
+#Overall permanova effects
+foo<-adonis(taxonomy_genera~time + caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta, method="bray")
+
+print(foo$aov.tab)
+
+#With time as strata
+foo<-adonis(taxonomy_genera~time + caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta, method="bray", strata=meta$time)
+
+print(foo$aov.tab)
+
+
+# Make figure 1
+test<-otu_table(taxonomy_genera, taxa_are_rows = FALSE)
+mds<-metaMDS(test, dist="bray", k=2)
+stressplot(mds)
+
+print(mds$stress)
+
+fig1A<-gg_ordiplot(mds, groups=meta$time, scaling = 1, choices = c(1, 2), kind = "se", conf = 0.95, show.groups = "all", ellipse = TRUE, label = FALSE, hull = FALSE, spiders = FALSE, plot = TRUE, pt.size=1)
+meta$time = as.numeric(as.character(meta$time)) 
+# Fig 1B
+taxo_g0 <-subset(taxonomy_genera, Taxonomy_filtered$time == 0)
+meta0<-subset(meta, meta$time== 0)
+foo<-adonis(taxo_g0~caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta0, method="bray")
+print(foo$aov.tab)
+
+mds<-metaMDS(taxo_g0, dist="bray", k=2)
+stressplot(mds)
+print(mds$stress)
+
+
+fig1B<-gg_ordiplot(mds, groups=meta0$caesar, scaling = 1, choices = c(1, 2), kind = "se", conf = 0.95, show.groups = "all", ellipse = TRUE, label = FALSE, hull = FALSE, spiders = FALSE, plot = TRUE, pt.size=1) 
+
+
+# Fig 1c
+taxo_g3 <-subset(taxonomy_genera, Taxonomy_filtered$time == 3)
+meta3<-subset(meta, meta$time == 3)
+foo<-adonis(taxo_g3~caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta3, method="bray")
+print(foo$aov.tab)
+
+mds<-metaMDS(taxo_g3, dist="bray", k=2)
+stressplot(mds)
+print(mds$stress)
+
+fig1C<-gg_ordiplot(mds, groups=meta3$caesar, scaling = 1, choices = c(1, 2), kind = "se", conf = 0.95, show.groups = "all", ellipse = TRUE, label = FALSE, hull = FALSE, spiders = FALSE, plot = TRUE, pt.size=1)
+
+# Fig 1D
+taxo_g12 <-subset(taxonomy_genera, Taxonomy_filtered$time == 12)
+meta12<-subset(meta, meta$time == 12)
+foo<-adonis(taxo_g12~caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta12, method="bray")
+print(foo$aov.tab)
+
+mds<-metaMDS(taxo_g12, dist="bray", k=2)
+stressplot(mds)
+print(mds$stress)
+
+fig1D<-gg_ordiplot(mds, groups=meta12$caesar, scaling = 1, choices = c(1, 2), kind = "se", conf = 0.95, show.groups = "all", ellipse = TRUE, label = FALSE, hull = FALSE, spiders = FALSE, plot = TRUE, pt.size=1)
+
+# Fig 1E
+taxo_g24 <-subset(taxonomy_genera, Taxonomy_filtered$time == 24)
+meta24<-subset(meta, meta$time == 24)
+foo<-adonis(taxo_g24~caesar + eczema_by_2_years + studygroup + Antibiotics_before_3_months + Any_smoking_during_pregnancy + Any_pet_at_birth, data=meta24, method="bray")
+print(foo$aov.tab)
+
+mds<-metaMDS(taxo_g24, dist="bray", k=2)
+stressplot(mds)
+print(mds$stress)
+
+fig1E<-gg_ordiplot(mds, groups=meta24$caesar, scaling = 1, choices = c(1, 2), kind = "se", conf = 0.95, show.groups = "all", ellipse = TRUE, label = FALSE, hull = FALSE, spiders = FALSE, plot = TRUE, pt.size=1)
+
+A<-fig1A$plot
+
+t1<-fig1B$plot + coord_cartesian(xlim = c(-1.25, 1.25), ylim=c(-1.25, 1.25))
+t2<-fig1C$plot + coord_cartesian(xlim = c(-1.25, 1.25), ylim=c(-1.25, 1.25))
+t3<-fig1D$plot + coord_cartesian(xlim = c(-1.25, 1.25), ylim=c(-1.25, 1.25))
+t4<-fig1E$plot + coord_cartesian(xlim = c(-1.25, 1.25), ylim=c(-1.25, 1.25))
+foo<-ggarrange(t1, t2, t3, t4, ncol=2, nrow=2, common.legend=TRUE, widths=c(1, 1), heights=c(1, 1), labels=c("0", "3", "12", "24"), legend=c("bottom"), label.x=0.5 )
+bar<-ggarrange(A, foo, ncol=2, labels=c("A", "B"), legend=c("bottom"), widths=c(1, 1.5))
+
+
+ggsave("~/PIP2018/results/Fig1.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+
+# This plot is post-processed in Inkscape to add stress, recenter B row 1 labels, and shade centroids
+
+```
+
+
+```{r}
+boxplot(Taxonomy_filtered[,541] ~ Taxonomy_filtered$studygroup, ylim = c(0, 5), ylab="abundance L. rhamnosus", col=c("red", "blue", "orange"))
+
+kruskal.test(Taxonomy_filtered[,166] ~ Taxonomy_filtered$studygroup)
+
+
+boxplot(Taxonomy_filtered[,166] ~ Taxonomy_filtered$studygroup, ylim = c(0, 1), ylab="abundance B. animalis", col=c("red", "blue", "orange"))
+
+kruskal.test(Taxonomy_filtered[,541] ~ Taxonomy_filtered$studygroup)
+
+biff<-cbind(Taxonomy_filtered$time, as.character(Taxonomy_filtered$studygroup), Taxonomy_filtered[,166], Taxonomy_filtered[,541])
+biff<-as.data.frame(biff)
+colnames(biff) = c("time", "studygroup", "b.animalis", "l.rhamnosus")
+
+levels(biff$time) = c(0, 3, 12, 24)
+biff$studygroup = factor(biff$studygroup)
+
+
+biff$b.animalis = as.numeric(as.character(biff$b.animalis))
+biff$l.rhamnosus = as.numeric(as.character(biff$l.rhamnosus))
+biff$studygroup = gsub("bifido DR10", "b.lactis HN019", biff$studygroup)
+biff$studygroup = gsub("lactob DR20", "l.rhamnosus HN001", biff$studygroup)
+biff$studygroup = gsub("placeb", "placebo", biff$studygroup)
+
+c<-ggplot(biff, aes(y=log(b.animalis), x=studygroup, color=studygroup))
+c<- c + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
+d<-ggplot(biff, aes(y=log(l.rhamnosus), x=studygroup, color=studygroup))
+          
+d<-d + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
+ggarrange(c, d, labels=c("A", "B"), common.legend=TRUE)
+
+ggsave("~/PIP2018/results/SupFig3.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+
+
+# calculate p values
+pairwise.wilcox.test(biff$l.rhamnosus, interaction(biff$studygroup,biff$time), p.adj = "BH")
+
+# calculate p values
+pairwise.wilcox.test(biff$b.animalis, interaction(biff$studygroup,biff$time), p.adj = "BH")
+
+```
+
+Supplementary Figure 4
+```{r}
+#collect objects for ggplotting
+modules<-read.table("~/PIP2018/derived_data/filtered_modules.tsv", header=TRUE, sep="\t")
+tax<-read.table("~/PIP2018/derived_data/filtered_taxonomy.tsv", header=TRUE, sep="\t")
+
+pathways<-read.table("~/PIP2018/derived_data/filtered_pathways.tsv", header=TRUE, sep="\t")
+
+myvars3 = c("Sample", "ko00531", "ko00240", "ko04141")
+pwys<-pathways[myvars3]
+
+# match colnames taxonomy filtered
+myvars <- c("Sample", "time", "studygroup", "eczema_by_2_years", "M00198", "M00277")
+mods <- modules[myvars]
+myvars2 <- c("Sample", "k__Bacteria.p__Actinobacteria.c__Actinobacteria.o__Bifidobacteriales.f__Bifidobacteriaceae.g__Bifidobacterium.s__Bifidobacterium_animalis", "k__Bacteria.p__Firmicutes.c__Bacilli.o__Lactobacillales.f__Lactobacillaceae.g__Lactobacillus.s__Lactobacillus_rhamnosus")
+tx <- tax[myvars2]
+m1 <- merge(x=mods,y=tx,by.x = c("Sample"),by.y = c("Sample"),all.y = TRUE)
+colnames(m1)[7] = "B.animalis"
+colnames(m1)[8] = "L.rhamnosus"
+m1<-merge(x=m1, y=pwys,  by.x=c("Sample"), by.y=c("Sample"), all.y=TRUE)
+m1$eczema_by_2_years = factor(m1$eczema_by_2_years)
+m1$time = factor(m1$time)
+m1$studygroup = gsub("bifido DR10", "b.lactis HN019", biff$studygroup)
+m1$studygroup = gsub("lactob DR20", "l.rhamnosus HN001", biff$studygroup)
+m1$studygroup = gsub("placeb", "placebo", biff$studygroup)
+
+
+# Make plots
+#S4A
+a<-ggplot(data=m1, aes(x=L.rhamnosus, y=M00198, colour=studygroup)) + geom_point() + facet_wrap(~studygroup) + geom_smooth(method="lm") + scale_x_continuous(limits = c(0, 10)) + stat_cor(method="spearman") +
+    theme(legend.position="bottom")
+# S4B
+b1<-ggplot(data=m1, aes(x=time, y=M00277, colour=eczema_by_2_years)) + geom_boxplot() + stat_compare_means(method="wilcox.test", label="p.signif", label.y=0.01) + coord_cartesian(ylim=c(0, 0.01)) 
+b2<-ggplot(data=m1, aes(x=time, y=log(ko00531), colour=eczema_by_2_years)) + geom_boxplot() +   stat_compare_means(method="wilcox.test", label="p.signif")
+b3<-ggplot(data=m1, aes(x=time, y=log(ko00240), colour=eczema_by_2_years)) + geom_boxplot() +   stat_compare_means(method="wilcox.test", label="p.signif") 
+b4<-ggplot(data=m1, aes(x=time, y=log(ko04141), colour=eczema_by_2_years)) + geom_boxplot() +   stat_compare_means(method="wilcox.test", label="p.signif") 
+panelb<-ggarrange(b1, b2, b3, b4, common.legend = TRUE, legend="bottom", labels=c("B"))
+
+c<-ggplot(data=m1, aes(x=time, y=log(L.rhamnosus), colour=eczema_by_2_years)) + geom_boxplot() + stat_compare_means(method="wilcox.test", label="p.signif") + theme(legend.position="none")
+
+
+
+leftpanel<-ggarrange(a, c, nrow=2, labels=c("A", "C"))
+all<-ggarrange(leftpanel, panelb, ncol=2)
+ggsave("~/PIP2018/results/SupFig4.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+                  
+```
+# Supplemental Plot: Understanding alpha diversity in the dataset
+```{r}
+#File of total reads per sample that went into MetaPhlAn / HUMANN
+NZGL_taxonomy_SP_counts<-read.csv("~/PIP2018/derived_data/NZGL_taxonomy_count_table.csv", header = TRUE)
+rownames(NZGL_taxonomy_SP_counts)<-NZGL_taxonomy_SP_counts$X
+NZGL_taxonomy_SP_counts<-NZGL_taxonomy_SP_counts[,-1]
+NZGL_taxonomy_SP_counts1<-NZGL_taxonomy_SP_counts[,colnames(NZGL_taxonomy_SP_counts)%in%c(as.character(Taxonomy_filtered$Sample))]
+
+
+## use the following method to produce a biom file to make rarefraction curve.
+# 1. open the NZGL_taxonomy_SP_counts.csv file in excel (the one in the new location) and create a new column at the beginning and name it  #OTU ID . Give each following row an unique OTU number (e.g. OTU1, OTU2, etc.). 
+# 2. move the taxonomy column to the every end and name it "taxonomy". Save the modified csv file to txt (tab-delimited table).
+# 3. convert it to josn biom use MacQiime: biom convert -i NZGL_taxonomy_SP_counts.txt -o NZGL_taxonomy_SP_counts.biom --table-type="OTU table" --to-json
+
+
+#============run this part after the biom file is made===========#
+# I have put the biom file I made in the repository to let the analyses run. However, feel free to make your own one and change the path of the file and have a go yourself
+# A) Rarefaction curves: Mean shannon diversity (with SD error bars/ 95% CI) for each age group
+NZGL_taxonomy_SP_counts1<-import_biom("~/PIP2018/derived_data/NZGL_taxonomy_SP_counts.biom")
+Count_table<-NZGL_taxonomy_SP_counts1
+Pipmeta<-as.data.frame(Taxonomy_filtered[,c(1:28)])
+source("~/PIP2018/src/Rarefraction_functions.r", local = TRUE)
+set.seed(42)
+
+rarefaction_curve_data <- calculate_rarefaction_curves(Count_table, c('Observed',"Chao1", "Shannon"), rep(c(1, 10, 100, 200, 500, 1000, 1:10 * 10000), each = 10))
+
+# calculate mean shannon/any other mesure alpha diveristy for each sample at each depth.
+rarefaction_curve_data_summary <- ddply(rarefaction_curve_data, c('Depth', 'Sample', 'Measure'), summarise, Alpha_diversity_mean = mean(Alpha_diversity), Alpha_diversity_sd = sd(Alpha_diversity))
+
+rarefaction_curve_data_shannon<-subset(rarefaction_curve_data_summary, Measure == "Shannon")
+
+# Pipmeta has been transposed so load a new set of metadata for selecting samples based on metadata categories.
+Pipmeta<-read.delim("~/PIP2018/primary_data/taxonomy.tsv", header = TRUE)
+shannon_merge<-merge(rarefaction_curve_data_shannon, data.frame(Pipmeta), by.x = "Sample")
+shannon_merge$time<-as.factor(shannon_merge$time)
+shannon_merge_summary<-summarySE(shannon_merge, measurevar="Alpha_diversity_mean", c("Depth", "time"))
+
+Sample_reads_sum<-as.data.frame(sample_sums(Count_table))
+
+Shannon_calcualtion<-estimate_richness(Count_table, measures = "Shannon")
+
+Shannon_calcualtion$Sample<-rownames(Shannon_calcualtion)
+shannon_merge<-merge(Shannon_calcualtion, data.frame(Pipmeta), by.x = "Sample")
+#add the total reads to metadata for correspondance samples
+shannon_merge$Sample_reads_sum<-Sample_reads_sum$`sample_sums(Count_table)`[(match(shannon_merge$Sample,rownames(Sample_reads_sum)))]
+#convert time variable to factor instead of integer
+shannon_merge$time<-as.factor(shannon_merge$time)
+shannon_merge$eczema_by_2_years = factor(shannon_merge$eczema_by_2_years)
+ 
+
+panel1<-ggplot(shannon_merge, aes(time, Shannon, color=eczema_by_2_years))+geom_boxplot() + geom_jitter(width=0.2, size=1) + stat_compare_means(method="wilcox.test", label="p.signif")
+
+panel2<-ggplot(shannon_merge, aes(time, Shannon, color=studygroup))+geom_boxplot() + geom_jitter(width=0.2, size=1) + stat_compare_means(method="wilcox.test", label="p.signif") + scale_color_hue(labels = c("B.lactis HN019", "L.rhamnosus HN001", "placebo"))
+
+ggarrange(panel1, panel2, labels=c("A", "B"), legend="bottom")
+ggsave("~/PIP2018/results/SupFig2.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+```
+

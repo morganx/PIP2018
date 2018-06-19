@@ -1,0 +1,29 @@
+Markdown files in here:
+
+# In order to address the concerns of Reviewer #2, we have provided code for generation of two sets of results - our data filtered & not filtered to remove E. coli outliers.
+
+Master.RMD - makes most figures in paper, filters data to remove 1.5 IQR E. coli outliers
+
+Master-unfiltered.RMD - does same thing as Master.RMD, but does not filter data
+
+Rarefaction_functions.r - accessories for making rarefaction curves
+
+# Note: these are not quite identical because R & many libraries were upgraded between the time the first & second were run. Although this uses the versions of nlme & gam recommended by the software maintainers, p and q-values came out incorrect if do-maaslin-unfiltered was run with a random effects model for individual. This bug has been reported to the software maintainers but there is not a current fix.
+ 
+do-maaslin.RMD - runs multivariate linear modeling (on filtered data)
+do-maaslin-unfiltered.RMD - runs multivariate linear modeling on unfiltered data
+
+# These two files update maaslin outputs with the annotation of KEGG modules
+fix_maaslin_kegg.pl (usage: perl fix_maaslin_kegg.pl maaslin_output.txt > updated.txt)
+ 
+kegg.txt : a reference of annotations of kegg modules & pathways
+
+Monte Carlo analysis files:
+
+Monte_carlo_power_test.R is a function that powers generation of monte carlo analysis figures.
+Monte_carlo_pip_gitlab-FILTERED.RMD and Monte_carlo_pip_gitlab-UNFILTERED.RMD generate the Monte Carlo analysis figures for filtered & unfiltered data respectively.
+
+Reviewer2.RMD : a few plots we  made to answer Reviewer #2's questions. Also contains code to generate supplemental fig 14.
+
+
+

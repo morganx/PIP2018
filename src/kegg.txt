@@ -1,0 +1,508 @@
+ID	Description
+M00001	M00001: Glycolysis (Embden-Meyerhof pathway), glucose => pyruvate
+M00002	M00002: Glycolysis, core module involving three-carbon compounds
+M00003	M00003: Gluconeogenesis, oxaloacetate => fructose-6P
+M00004	M00004: Pentose phosphate pathway (Pentose phosphate cycle)
+M00006	M00006: Pentose phosphate pathway, oxidative phase, glucose 6P => ribulose 5P
+M00007	M00007: Pentose phosphate pathway, non-oxidative phase, fructose 6P => ribose 5P
+M00008	M00008: Entner-Doudoroff pathway, glucose-6P => glyceraldehyde-3P + pyruvate
+M00009	M00009: Citrate cycle (TCA cycle, Krebs cycle)
+M00011	M00011: Citrate cycle, second carbon oxidation
+M00012	M00012: Glyoxylate cycle
+M00013	M00013: Malonate semialdehyde pathway, propanoyl-CoA => Acetyl-CoA
+M00014	M00014: Glucuronate pathway (uronate pathway)
+M00016	M00016: Lysine biosynthesis, aspartate => lysine
+M00017	M00017: Methionine biosynthesis, apartate => homoserine => methionine
+M00018	M00018: Threonine biosynthesis, apartate => homoserine => threonine
+M00019	M00019: Leucine biosynthesis, pyruvate => 2-oxoisovalerate => leucine
+M00022	M00022: Shikimate pathway, phosphoenolpyruvate + erythrose-4P => chorismate
+M00025	M00025: Tyrosine biosynthesis, chorismate => tyrosine
+M00026	M00026: Histidine biosynthesis, PRPP => histidine
+M00028	M00028: Ornithine biosynthesis, glutamate => ornithine
+M00029	M00029: Urea cycle
+M00030	
+M00031	M00031: Lysine biosynthesis, archaea, 2-aminoadipate => lysine
+M00032	M00032: Lysine degradation, lysine => saccharopine => acetoacetyl-CoA
+M00033	M00033: Ectoine biosynthesis
+M00034	M00034: Methionine salvage pathway
+M00035	M00035: Methionine degradation
+M00036	M00036: Leucine degradation, leucine => acetoacetate + acetyl-CoA
+M00037	
+M00038	M00038: Tryptophan metabolism, tryptophan => kynurenine => 2-aminomuconate
+M00039	
+M00042	M00042: Catecholamine biosynthesis, tyrosine => dopamine => noradrenaline => adrenaline
+M00044	M00044: Tyrosine degradation, tyrosine => homogentisate
+M00045	M00045: Histidine degradation, histidine => N-formiminoglutamate => glutamate
+M00046	M00046: beta-Alanine biosynthesis, cytosine / uracil => beta-alanine
+M00048	M00048: Inosine monophosphate biosynthesis, PRPP + glutamine => IMP
+M00049	M00049: Adenine nucleotide biosynthesis, IMP => ADP/dADP,ATP/dATP
+M00050	M00050: Guanine nucleotide biosynthesis, IMP => GDP/dGDP,GTP/dGTP
+M00051	M00051: Uridine monophosphate biosynthesis, glutamine (+ PRPP) => UMP
+M00053	M00053: Pyrimidine deoxyribonuleotide biosynthesis, CDP/CTP => dCDP/dCTP,dTDP/dTTP
+M00055	M00055: N-glycan precursor biosynthesis
+M00056	
+M00057	
+M00059	
+M00060	M00060: Lipopolysaccharide biosynthesis, KDO2-lipid A
+M00061	M00061: Uronic acid metabolism
+M00064	M00064: ADP-L-glycero-D-manno-heptose biosynthesis
+M00065	
+M00072	M00072: Oligosaccharyltransferase
+M00074	
+M00075	
+M00076	
+M00077	
+M00078	
+M00079	M00079: Keratan sulfate degradation
+M00080	M00080: Lipopolysaccharide biosynthesis, inner core => outer core => O-antigen
+M00082	M00082: Fatty acid biosynthesis, initiation
+M00088	M00088: Ketone body biosynthesis, acetyl-CoA => acetoacetate/3-hydroxybutyrate/acetone
+M00089	M00089: Triacylglycerol biosynthesis
+M00094	
+M00095	M00095: C5 isoprenoid biosynthesis, mevalonate pathway
+M00096	M00096: C5 isoprenoid biosynthesis, non-mevalonate pathway
+M00099	
+M00101	M00101: Cholesterol biosynthesis, FPP => cholesterol
+M00102	
+M00104	
+M00105	M00105: Bile acid biosynthesis, cholesterol => chenodeoxycholate
+M00109	
+M00112	
+M00113	
+M00114	M00114: Ascorbate biosynthesis, plants, glucose-6P => ascorbate
+M00115	M00115: NAD biosynthesis, aspartate => NAD
+M00116	M00116: Menaquinone biosynthesis, chorismate => menaquinone
+M00117	M00117: Ubiquinone biosynthesis, prokaryotes, chorismate => ubiquinone
+M00119	M00119: Pantothenate biosynthesis, valine/L-aspartate => pantothenate
+M00121	M00121: Heme biosynthesis, glutamate => protoheme/siroheme
+M00122	M00122: Cobalamin biosynthesis, cobinamide => cobalamin
+M00123	M00123: Biotin biosynthesis, pimeloyl-CoA => biotin
+M00124	M00124: Pyridoxal biosynthesis, erythrose-4P => pyridoxal-5P
+M00125	M00125: Riboflavin biosynthesis, GTP => riboflavin/FMN/FAD
+M00126	M00126: Tetrahydrofolate biosynthesis, GTP => THF
+M00127	M00127: Thiamine biosynthesis, AIR => thiamine-P/thiamine-2P
+M00128	M00128: Ubiquinone biosynthesis, eukaryotes, chorismate => ubiquinone
+M00129	M00129: Ascorbate biosynthesis, animals, glucose-1P => ascorbate
+M00130	
+M00131	M00131: Inositol phosphate metabolism, Ins(1,3,4,5)P4 => Ins(1,3,4)P3 => myo-inositol
+M00133	M00133: Polyamine biosynthesis, arginine => agmatine => putrescine => spermidine
+M00136	M00136: GABA biosynthesis, prokaryotes, putrescine => GABA
+M00142	
+M00143	
+M00144	M00144: Complex I (NADH dehydrogenase), NADH dehydrogenase I
+M00145	M00145: Complex I (NADH dehydrogenase), NADH dehydrogenase I/diaphorase subunit of the bidirectional hydrogenase
+M00146	
+M00147	
+M00148	
+M00149	M00149: Complex II (succinate dehydrogenase / fumarate reductase), succinate dehydrogenase
+M00150	M00150: Complex II (succinate dehydrogenase / fumarate reductase), fumarate reductase
+M00152	M00152: Complex III (Cytochrome bc1 complex)
+M00154	M00154: Complex IV (Cytochrome c oxidase), cytochrome c oxidase
+M00155	M00155: Complex IV (Cytochrome c oxidase), cytochrome o ubiquinol oxidase/cytochrome c oxidase/quinol oxidase polypeptide
+M00156	M00156: Complex IV (Cytochrome c oxidase), cytochrome c oxidase, cbb3-type
+M00157	M00157: F-type ATPase, bacteria
+M00158	
+M00159	M00159: V-type ATPase, prokaryotes
+M00160	
+M00161	
+M00162	
+M00163	
+M00164	M00164: ATP synthase
+M00165	M00165: Reductive pentose phosphate cycle (Calvin cycle)
+M00166	M00166: Reductive pentose phosphate cycle, RuBP + CO2 => glyceraldehyde-3P
+M00167	M00167: Reductive pentose phosphate cycle, glyceraldehyde-3P => RuBP
+M00171	M00171: C4-dicarboxylic acid cycle, NAD+ -malic enzyme type
+M00172	M00172: C4-dicarboxylic acid cycle, NADP+ -malic enzyme type
+M00173	M00173: Reductive citric acid cycle (Arnon-Buchanan cycle)
+M00174	M00174: Methane oxidation, methylotroph, methane => CO2
+M00176	M00176: Sulfur reduction, sulfate => H2S
+M00177	
+M00178	M00178: Ribosome, bacteria
+M00179	M00179: Ribosome, archaea
+M00180	
+M00181	
+M00182	
+M00184	M00184: RNA polymerase, archaea
+M00185	M00185: Sulfate transport system
+M00193	M00193: Putative spermidine/putrescine transport system
+M00194	M00194: Maltose/maltodextrin transport system
+M00197	M00197: Putative sugar transport system
+M00198	M00198: sn-Glycerol 3-phosphate transport system
+M00199	M00199: Lactose/L-arabinose transport system
+M00200	M00200: Sorbitol/mannitol transport system
+M00201	M00201: alpha-Glucoside transport system
+M00202	M00202: Oligogalacturonide transport system
+M00203	M00203: Glucose/arabinose transport system
+M00204	
+M00206	M00206: Cellobiose transport system
+M00207	M00207: Multiple sugar transport system
+M00219	M00219: AI-2 transport system
+M00220	
+M00222	M00222: Phosphate transport system
+M00225	M00225: Lysine/arginine/ornithine transport system
+M00226	M00226: Histidine transport system
+M00229	M00229: Arginine transport system
+M00230	M00230: Glutamate/aspartate transport system
+M00231	
+M00232	M00232: General L-amino acid transport system
+M00233	M00233: Glutamate transport system
+M00235	
+M00237	M00237: Branched-chain amino acid transport system
+M00239	M00239: Peptides/nickel transport system
+M00245	M00245: Cobalt transport system
+M00246	M00246: Nickel transport system
+M00260	M00260: DNA polymerase III complex, bacteria
+M00261	
+M00262	
+M00263	
+M00276	M00276: PTS system, mannose-specific II component
+M00277	M00277: PTS system, N-acetylgalactosamine-specific II component
+M00278	
+M00284	
+M00285	
+M00286	
+M00287	M00287: PTS system, galactosamine-specific II component
+M00290	M00290: Holo-TFIIH complex
+M00295	M00295: BRCA1-associated genome surveillance complex (BASC)
+M00296	
+M00299	M00299: Spermidine/putrescine transport system
+M00300	M00300: Putrescine transport system
+M00301	
+M00302	
+M00304	
+M00310	M00310: Pyruvate:ferredoxin oxidoreductase
+M00311	M00311: 2-oxoglutarate:ferredoxin oxidoreductase
+M00312	
+M00317	M00317: Manganese/iron transport system
+M00319	M00319: Manganese/zinc/iron transport system
+M00321	
+M00322	
+M00323	
+M00324	M00324: Dipeptide transport system
+M00326	M00326: RTX toxin transport system
+M00331	M00331: Type II general secretion system
+M00332	M00332: Type III secretion system
+M00333	M00333: Type IV secretion system
+M00334	M00334: Type VI secretion system
+M00335	M00335: Sec (secretion) system
+M00336	M00336: Twin-arginine translocation (Tat) system
+M00337	
+M00340	
+M00341	
+M00342	M00342: Bacterial proteasome
+M00346	M00346: Formaldehyde assimilation, serine pathway
+M00347	
+M00348	M00348: Glutathione transport system
+M00349	M00349: Microcin C transport system
+M00350	M00350: Capsaicin biosynthesis, L-Phenylalanine => Capsaicin
+M00351	
+M00352	
+M00353	
+M00354	
+M00355	
+M00356	
+M00357	
+M00358	M00358: Coenzyme M biosynthesis
+M00359	M00359: Aminoacyl-tRNA biosynthesis, eukaryotes
+M00360	M00360: Aminoacyl-tRNA biosynthesis, prokaryotes
+M00361	M00361: Nucleotide sugar biosynthesis, eukaryotes
+M00362	M00362: Nucleotide sugar biosynthesis, prokaryotes
+M00366	M00366: C10-C20 isoprenoid biosynthesis, plants
+M00370	
+M00371	
+M00372	
+M00373	M00373: Ethylmalonyl pathway
+M00374	M00374: Dicarboxylate-hydroxybutyrate cycle
+M00375	M00375: Hydroxypropionate-hydroxybutylate cycle
+M00376	M00376: 3-Hydroxypropionate bicycle
+M00377	M00377: Reductive acetyl-CoA pathway (Wood-Ljungdahl pathway)
+ko05340	ko05340: Primary immunodeficiency
+ko00564	ko00564: Glycerophospholipid metabolism
+ko00680	ko00680: Methane metabolism
+ko00562	ko00562: Inositol phosphate metabolism
+ko00563	ko00563: Glycosylphosphatidylinositol(GPI)-anchor biosynthesis
+ko00981	ko00981: Insect hormone biosynthesis
+ko00561	ko00561: Glycerolipid metabolism
+ko00440	ko00440: Phosphonate and phosphinate metabolism
+ko00250	ko00250: Alanine, aspartate and glutamate metabolism
+ko04062	ko04062: Chemokine signaling pathway
+ko00361	ko00361: Chlorocyclohexane and chlorobenzene degradation
+ko04060	ko04060: Cytokine-cytokine receptor interaction
+ko04145	ko04145: Phagosome
+ko04940	ko04940: Type I diabetes mellitus
+ko00010	ko00010: Glycolysis / Gluconeogenesis
+ko05412	ko05412: Arrhythmogenic right ventricular cardiomyopathy (ARVC)
+ko04650	ko04650: Natural killer cell mediated cytotoxicity
+ko03450	ko03450: Non-homologous end-joining
+ko00760	ko00760: Nicotinate and nicotinamide metabolism
+ko00920	ko00920: Sulfur metabolism
+ko00311	ko00311: Penicillin and cephalosporin biosynthesis
+ko00310	ko00310: Lysine degradation
+ko04146	ko04146: Peroxisome
+ko00600	ko00600: Sphingolipid metabolism
+ko04140	ko04140: Regulation of autophagy
+ko04141	ko04141: Protein processing in endoplasmic reticulum
+ko04142	ko04142: Lysosome
+ko00604	ko00604: Glycosphingolipid biosynthesis - ganglio series
+ko05143	ko05143: African trypanosomiasis
+ko03040	ko03040: Spliceosome
+ko04711	ko04711: Circadian rhythm - fly
+ko02060	ko02060: Phosphotransferase system (PTS)
+ko04712	ko04712: Circadian rhythm - plant
+ko00944	ko00944: Flavone and flavonol biosynthesis
+ko00909	ko00909: Sesquiterpenoid biosynthesis
+ko04971	ko04971: Gastric acid secretion
+ko00512	ko00512: Mucin type O-Glycan biosynthesis
+ko00511	ko00511: Other glycan degradation
+ko00510	ko00510: N-Glycan biosynthesis
+ko05110	ko05110: Vibrio cholerae infection
+ko04974	ko04974: Protein digestion and absorption
+ko04976	ko04976: Bile secretion
+ko00450	ko00450: Selenocompound metabolism
+ko00565	ko00565: Ether lipid metabolism
+ko00904	ko00904: Diterpenoid biosynthesis
+ko00950	ko00950: Isoquinoline alkaloid biosynthesis
+ko04075	ko04075: Plant hormone signal transduction
+ko00300	ko00300: Lysine biosynthesis
+ko00905	ko00905: Brassinosteroid biosynthesis
+ko00402	ko00402: Benzoxazinoid biosynthesis
+ko00196	ko00196: Photosynthesis - antenna proteins
+ko00195	ko00195: Photosynthesis
+ko05416	ko05416: Viral myocarditis
+ko00260	ko00260: Glycine, serine and threonine metabolism
+ko00190	ko00190: Oxidative phosphorylation
+ko03440	ko03440: Homologous recombination
+ko00750	ko00750: Vitamin B6 metabolism
+ko04626	ko04626: Plant-pathogen interaction
+ko04260	ko04260: Cardiac muscle contraction
+ko05140	ko05140: Leishmaniasis
+ko00592	ko00592: alpha-Linolenic acid metabolism
+ko00591	ko00591: Linoleic acid metabolism
+ko00590	ko00590: Arachidonic acid metabolism
+ko00062	ko00062: Fatty acid elongation in mitochondria
+ko00061	ko00061: Fatty acid biosynthesis
+ko04662	ko04662: B cell receptor signaling pathway
+ko03070	ko03070: Bacterial secretion system
+ko00253	ko00253: Tetracycline biosynthesis
+ko04730	ko04730: Long-term depression
+ko04664	ko04664: Fc epsilon RI signaling pathway
+ko00903	ko00903: Limonene and pinene degradation
+ko04740	ko04740: Olfactory transduction
+ko00380	ko00380: Tryptophan metabolism
+ko00500	ko00500: Starch and sucrose metabolism
+ko05120	ko05120: Epithelial cell signaling in Helicobacter pylori infection
+ko04666	ko04666: Fc gamma R-mediated phagocytosis
+ko00362	ko00362: Benzoate degradation
+ko05322	ko05322: Systemic lupus erythematosus
+ko04964	ko04964: Proximal tubule bicarbonate reclamation
+ko05320	ko05320: Autoimmune thyroid disease
+ko04962	ko04962: Vasopressin-regulated water reabsorption
+ko04960	ko04960: Aldosterone-regulated sodium reabsorption
+ko04660	ko04660: T cell receptor signaling pathway
+ko00625	ko00625: Chloroalkane and chloroalkene degradation
+ko00624	ko00624: Polycyclic aromatic hydrocarbon degradation
+ko00627	ko00627: Aminobenzoate degradation
+ko00626	ko00626: Naphthalene degradation
+ko00621	ko00621: Dioxin degradation
+ko00620	ko00620: Pyruvate metabolism
+ko00623	ko00623: Toluene degradation
+ko00622	ko00622: Xylene degradation
+ko00270	ko00270: Cysteine and methionine metabolism
+ko04380	ko04380: Osteoclast differentiation
+ko00940	ko00940: Phenylpropanoid biosynthesis
+ko00941	ko00941: Flavonoid biosynthesis
+ko01053	ko01053: Biosynthesis of siderophore group nonribosomal peptides
+ko00970	ko00970: Aminoacyl-tRNA biosynthesis
+ko00100	ko00100: Steroid biosynthesis
+ko00945	ko00945: Stilbenoid, diarylheptanoid and gingerol biosynthesis
+ko00363	ko00363: Bisphenol degradation
+ko01056	ko01056: Biosynthesis of type II polyketide backbone
+ko04672	ko04672: Intestinal immune network for IgA production
+ko04670	ko04670: Leukocyte transendothelial migration
+ko00071	ko00071: Fatty acid metabolism
+ko00740	ko00740: Riboflavin metabolism
+ko04360	ko04360: Axon guidance
+ko05219	ko05219: Bladder cancer
+ko04912	ko04912: GnRH signaling pathway
+ko05217	ko05217: Basal cell carcinoma
+ko05216	ko05216: Thyroid cancer
+ko05215	ko05215: Prostate cancer
+ko05214	ko05214: Glioma
+ko05213	ko05213: Endometrial cancer
+ko05212	ko05212: Pancreatic cancer
+ko03060	ko03060: Protein export
+ko00072	ko00072: Synthesis and degradation of ketone bodies
+ko00902	ko00902: Monoterpenoid biosynthesis
+ko00534	ko00534: Glycosaminoglycan biosynthesis - heparan sulfate
+ko04910	ko04910: Insulin signaling pathway
+ko00531	ko00531: Glycosaminoglycan degradation
+ko04916	ko04916: Melanogenesis
+ko05130	ko05130: Pathogenic Escherichia coli infection
+ko04914	ko04914: Progesterone-mediated oocyte maturation
+ko00360	ko00360: Phenylalanine metabolism
+ko04112	ko04112: Cell cycle - Caulobacter
+ko04111	ko04111: Cell cycle - yeast
+ko04110	ko04110: Cell cycle
+ko00364	ko00364: Fluorobenzoate degradation
+ko00533	ko00533: Glycosaminoglycan biosynthesis - keratan sulfate
+ko04115	ko04115: p53 signaling pathway
+ko04114	ko04114: Oocyte meiosis
+ko00532	ko00532: Glycosaminoglycan biosynthesis - chondroitin sulfate
+ko00430	ko00430: Taurine and hypotaurine metabolism
+ko02010	ko02010: ABC transporters
+ko00130	ko00130: Ubiquinone and other terpenoid-quinone biosynthesis
+ko04622	ko04622: RIG-I-like receptor signaling pathway
+ko00633	ko00633: Nitrotoluene degradation
+ko00040	ko00040: Pentose and glucuronate interconversions
+ko00730	ko00730: Thiamine metabolism
+ko00630	ko00630: Glyoxylate and dicarboxylate metabolism
+ko01040	ko01040: Biosynthesis of unsaturated fatty acids
+ko04144	ko04144: Endocytosis
+ko04514	ko04514: Cell adhesion molecules (CAMs)
+ko04512	ko04512: ECM-receptor interaction
+ko00281	ko00281: Geraniol degradation
+ko00280	ko00280: Valine, leucine and isoleucine degradation
+ko03013	ko03013: RNA transport
+ko03010	ko03010: Ribosome
+ko05200	ko05200: Pathways in cancer
+ko00601	ko00601: Glycosphingolipid biosynthesis - lacto and neolacto series
+ko03015	ko03015: mRNA surveillance pathway
+ko00312	ko00312: beta-Lactam resistance
+ko05020	ko05020: Prion diseases
+ko00522	ko00522: Biosynthesis of 12-, 14- and 16-membered macrolides
+ko05142	ko05142: Chagas disease (American trypanosomiasis)
+ko00520	ko00520: Amino sugar and nucleotide sugar metabolism
+ko00521	ko00521: Streptomycin biosynthesis
+ko05146	ko05146: Amoebiasis
+ko05145	ko05145: Toxoplasmosis
+ko05144	ko05144: Malaria
+ko00052	ko00052: Galactose metabolism
+ko00053	ko00053: Ascorbate and aldarate metabolism
+ko00051	ko00051: Fructose and mannose metabolism
+ko00400	ko00400: Phenylalanine, tyrosine and tryptophan biosynthesis
+ko00350	ko00350: Tyrosine metabolism
+ko00480	ko00480: Glutathione metabolism
+ko00643	ko00643: Styrene degradation
+ko00642	ko00642: Ethylbenzene degradation
+ko00640	ko00640: Propanoate metabolism
+ko00720	ko00720: Carbon fixation pathways in prokaryotes
+ko00960	ko00960: Tropane, piperidine and pyridine alkaloid biosynthesis
+ko04370	ko04370: VEGF signaling pathway
+ko00966	ko00966: Glucosinolate biosynthesis
+ko02020	ko02020: Two-component system
+ko00603	ko00603: Glycosphingolipid biosynthesis - globo series
+ko04020	ko04020: Calcium signaling pathway
+ko03008	ko03008: Ribosome biogenesis in eukaryotes
+ko04966	ko04966: Collecting duct acid secretion
+ko00290	ko00290: Valine, leucine and isoleucine biosynthesis
+ko04614	ko04614: Renin-angiotensin system
+ko04610	ko04610: Complement and coagulation cascades
+ko04340	ko04340: Hedgehog signaling pathway
+ko03410	ko03410: Base excision repair
+ko05010	ko05010: Alzheimer's disease
+ko05012	ko05012: Parkinson's disease
+ko00980	ko00980: Metabolism of xenobiotics by cytochrome P450
+ko05014	ko05014: Amyotrophic lateral sclerosis (ALS)
+ko00410	ko00410: beta-Alanine metabolism
+ko05016	ko05016: Huntington's disease
+ko05150	ko05150: Staphylococcus aureus infection
+ko00791	ko00791: Atrazine degradation
+ko00790	ko00790: Folate biosynthesis
+ko05131	ko05131: Shigellosis
+ko04540	ko04540: Gap junction
+ko00020	ko00020: Citrate cycle (TCA cycle)
+ko00710	ko00710: Carbon fixation in photosynthetic organisms
+ko04710	ko04710: Circadian rhythm - mammal
+ko00340	ko00340: Histidine metabolism
+ko04130	ko04130: SNARE interactions in vesicular transport
+ko00550	ko00550: Peptidoglycan biosynthesis
+ko00650	ko00650: Butanoate metabolism
+ko03030	ko03030: DNA replication
+ko05220	ko05220: Chronic myeloid leukemia
+ko05221	ko05221: Acute myeloid leukemia
+ko04742	ko04742: Taste transduction
+ko02030	ko02030: Bacterial chemotaxis
+ko03320	ko03320: PPAR signaling pathway
+ko04744	ko04744: Phototransduction
+ko04745	ko04745: Phototransduction - fly
+ko04530	ko04530: Tight junction
+ko00514	ko00514: Other types of O-glycan biosynthesis
+ko04612	ko04612: Antigen processing and presentation
+ko04621	ko04621: NOD-like receptor signaling pathway
+ko04620	ko04620: Toll-like receptor signaling pathway
+ko04623	ko04623: Cytosolic DNA-sensing pathway
+ko04330	ko04330: Notch signaling pathway
+ko04270	ko04270: Vascular smooth muscle contraction
+ko00910	ko00910: Nitrogen metabolism
+ko00513	ko00513: Various types of N-glycan biosynthesis
+ko00460	ko00460: Cyanoamino acid metabolism
+ko04970	ko04970: Salivary secretion
+ko00830	ko00830: Retinol metabolism
+ko00780	ko00780: Biotin metabolism
+ko04973	ko04973: Carbohydrate digestion and absorption
+ko00785	ko00785: Lipoic acid metabolism
+ko00030	ko00030: Pentose phosphate pathway
+ko04972	ko04972: Pancreatic secretion
+ko00232	ko00232: Caffeine metabolism
+ko00230	ko00230: Purine metabolism
+ko05223	ko05223: Non-small cell lung cancer
+ko04122	ko04122: Sulfur relay system
+ko04120	ko04120: Ubiquitin mediated proteolysis
+ko00540	ko00540: Lipopolysaccharide biosynthesis
+ko05111	ko05111: Vibrio cholerae pathogenic cycle
+ko03022	ko03022: Basal transcription factors
+ko00660	ko00660: C5-Branched dibasic acid metabolism
+ko03020	ko03020: RNA polymerase
+ko00982	ko00982: Drug metabolism - cytochrome P450
+ko04630	ko04630: Jak-STAT signaling pathway
+ko04350	ko04350: TGF-beta signaling pathway
+ko05100	ko05100: Bacterial invasion of epithelial cells
+ko05414	ko05414: Dilated cardiomyopathy
+ko00983	ko00983: Drug metabolism - other enzymes
+ko00860	ko00860: Porphyrin and chlorophyll metabolism
+ko05410	ko05410: Hypertrophic cardiomyopathy (HCM)
+ko00330	ko00330: Arginine and proline metabolism
+ko04080	ko04080: Neuroactive ligand-receptor interaction
+ko05310	ko05310: Asthma
+ko03018	ko03018: RNA degradation
+ko00908	ko00908: Zeatin biosynthesis
+ko04930	ko04930: Type II diabetes mellitus
+ko04320	ko04320: Dorso-ventral axis formation
+ko03430	ko03430: Mismatch repair
+ko00906	ko00906: Carotenoid biosynthesis
+ko05222	ko05222: Small cell lung cancer
+ko00900	ko00900: Terpenoid backbone biosynthesis
+ko00901	ko00901: Indole alkaloid biosynthesis
+ko04520	ko04520: Adherens junction
+ko02040	ko02040: Flagellar assembly
+ko00471	ko00471: D-Glutamine and D-glutamate metabolism
+ko00473	ko00473: D-Alanine metabolism
+ko04950	ko04950: Maturity onset diabetes of the young
+ko04510	ko04510: Focal adhesion
+ko00942	ko00942: Anthocyanin biosynthesis
+ko04810	ko04810: Regulation of actin cytoskeleton
+ko05211	ko05211: Renal cell carcinoma
+ko04210	ko04210: Apoptosis
+ko00240	ko00240: Pyrimidine metabolism
+ko04012	ko04012: ErbB signaling pathway
+ko04013	ko04013: MAPK signaling pathway - fly
+ko04010	ko04010: MAPK signaling pathway
+ko04011	ko04011: MAPK signaling pathway - yeast
+ko04113	ko04113: Meiosis - yeast
+ko05218	ko05218: Melanoma
+ko04070	ko04070: Phosphatidylinositol signaling system
+ko04640	ko04640: Hematopoietic cell lineage
+ko04310	ko04310: Wnt signaling pathway
+ko03420	ko03420: Nucleotide excision repair
+ko00770	ko00770: Pantothenate and CoA biosynthesis
+ko05210	ko05210: Colorectal cancer
+ko00670	ko00670: One carbon pool by folate
+ko04150	ko04150: mTOR signaling pathway
+ko00140	ko00140: Steroid hormone biosynthesis
+ko04920	ko04920: Adipocytokine signaling pathway
+ko00120	ko00120: Primary bile acid biosynthesis
+ko05160	ko05160: Hepatitis C
+ko03050	ko03050: Proteasome
+ko00930	ko00930: Caprolactam degradation
+ko04720	ko04720: Long-term potentiation
+ko04722	ko04722: Neurotrophin signaling pathway
