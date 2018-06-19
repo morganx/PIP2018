@@ -1,0 +1,10 @@
+This figure was made from a subset of Sup Table 1 taxonomy associations
+
+Included are the three pieces used by Graphlan.
+
+graphlan_annot.py --annot graphlan_annot.txt graphlan_tree.txt graphlan.xml
+graphlan.py graphlan.xml Fig3.pdf --dpi 300
+
+Note: Fig3 was post-processed in inkscape to add colors to phyla, add a scale bar, and tidy up overlapping names
+
+
