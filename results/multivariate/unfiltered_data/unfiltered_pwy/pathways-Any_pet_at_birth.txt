@@ -1,0 +1,2 @@
+Variable	Feature	Value	Coefficient	N	N not 0	P-value	Q-value
+Any_pet_at_birth	ko04711	Any_pet_at_birth1	-0.000144860661900655	654	551	0.511231601374081	1

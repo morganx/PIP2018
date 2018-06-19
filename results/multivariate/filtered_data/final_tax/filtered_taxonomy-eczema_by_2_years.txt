@@ -1,0 +1,2 @@
+Variable	Feature	Value	Coefficient	N	N not 0	P-value	Q-value
+eczema_by_2_years	k__Bacteria_p__Firmicutes_c__Bacilli_o__Bacillales_f__Bacillales_noname_g__Gemella_s__Gemella_unclassified	eczema_by_2_years1	-0.00430051904030397	518	148	0.190352697468082	1

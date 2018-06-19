@@ -1,0 +1,5 @@
+Variable	Feature	Value	Coefficient	N	N not 0	P-value	Q-value
+eczema_by_2_years	k__Bacteria|p__Firmicutes|c__Bacilli|o__Lactobacillales	eczema_by_2_years1	0.0416692150426412	646	645	0.0286023951227873	0.227443349571329
+eczema_by_2_years	k__Bacteria|p__Firmicutes|c__Bacilli|o__Bacillales|f__Bacillales_noname|g__Gemella|s__Gemella_unclassified	eczema_by_2_years1	-0.00664897886924221	646	199	0.0401060871446225	0.30650418423664
+eczema_by_2_years	k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Bifidobacteriales	eczema_by_2_years1	-0.00956339632818855	646	602	0.113606306887347	0.731224200682701
+eczema_by_2_years	k__Bacteria|p__Actinobacteria|c__Actinobacteria|o__Bifidobacteriales|f__Bifidobacteriaceae	eczema_by_2_years1	-0.00956339632818855	646	602	0.113606306887347	0.731224200682701

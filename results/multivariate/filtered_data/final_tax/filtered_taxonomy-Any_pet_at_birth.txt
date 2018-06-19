@@ -1,0 +1,2 @@
+Variable	Feature	Value	Coefficient	N	N not 0	P-value	Q-value
+Any_pet_at_birth	k__Viruses_p__Viruses_noname_c__Viruses_noname_o__Viruses_noname	Any_pet_at_birth1	-0.000210546009694613	518	65	0.97124697957734	1

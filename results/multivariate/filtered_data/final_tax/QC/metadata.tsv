@@ -1,0 +1,519 @@
+	time	Studyid	bfduration	ageanyformula	Antibiotics_before_3_months	Any_pet_at_birth	Any_smoking_during_pregnancy	caesar	eczema_by_2_years	studygroup
+sample_002	0	P530	4.651162791	12	0	1	0	0	0	lactob DR20
+sample_003	0	P552	20	51.96	0	0	0	0	1	placeb
+sample_009	0	P531	12.5	12	0	0	0	0	0	placeb
+sample_011	0	P580	2.093023256	0	0	0	0	0	0	placeb
+sample_016	0	P582	7.5	30.31	0	0	0	0	1	lactob DR20
+sample_022	0	P513	11	24	0	0	0	0	0	lactob DR20
+sample_023	0	P546	23.5	0	0	0	0	1	0	lactob DR20
+sample_024	0	P611	12.5	8	0	0	0	0	0	placeb
+sample_029	0	P514	6.5	16	0	0	0	0	0	placeb
+sample_030	0	P538	3.255813954	2	0	0	0	0	0	placeb
+sample_031	0	P617	0.697674419	3	1	0	0	1	0	placeb
+sample_037	0	P515	3.953488372	0	0	0	0	1	0	placeb
+sample_038	0	P562	4.88372093	13	0	1	0	1	0	lactob DR20
+sample_042	0	P566	18.10000038	8	0	1	0	1	0	placeb
+sample_043	0	P601	8	34.64	0	0	0	1	0	lactob DR20
+sample_049	0	P568	0.23255814	1	0	0	0	1	1	placeb
+sample_050	0	P604	7	0	0	0	0	1	1	placeb
+sample_056	0	P548	8	24	0	1	0	0	1	lactob DR20
+sample_116	0	P007	0.930232558	1	0	1	0	0	1	placeb
+sample_117	0	P012	2.906976744	12	0	0	0	1	0	lactob DR20
+sample_119	0	P020	NA	0	0	1	1	0	1	placeb
+sample_120	0	P028	13	NA	0	1	0	1	1	placeb
+sample_130	0	P219	11	2	0	1	0	0	0	placeb
+sample_135	0	P664	7.5	0	0	1	0	0	0	placeb
+sample_136	0	P662	10	15	0	0	0	1	0	lactob DR20
+sample_137	0	P659	11.5	NA	0	0	0	0	0	placeb
+sample_138	0	P656	22	NA	0	1	0	0	0	lactob DR20
+sample_139	0	P654	9	21	0	0	0	0	0	placeb
+sample_142	0	P650	11.5	43.3	0	0	0	0	1	placeb
+sample_143	0	P649	0.930232558	4	0	0	0	1	0	placeb
+sample_144	0	P644	9.5	28.145	0	1	0	1	1	placeb
+sample_146	0	P631	24	0	0	0	0	0	0	placeb
+sample_147	0	P628	13	36.805	0	0	0	0	0	placeb
+sample_201	0	P731	7.5	0	0	1	0	0	1	placeb
+sample_208	0	P041	12.5	51.96	0	0	0	0	0	lactob DR20
+sample_209	0	P045	17	34.64	0	1	0	0	0	lactob DR20
+sample_211	0	P054	11	6	0	0	0	0	0	lactob DR20
+sample_212	0	P059	13	20	1	0	0	0	1	lactob DR20
+sample_213	0	P067	6.5	4	0	1	0	0	1	placeb
+sample_214	0	P074	8.5	19.70000076	0	1	0	1	0	lactob DR20
+sample_215	0	P075	6.046511628	9	0	1	0	0	0	lactob DR20
+sample_217	0	P082	13	NA	0	0	0	0	0	placeb
+sample_218	0	P085	8	0	0	1	1	0	0	lactob DR20
+sample_219	0	P090	10.5	19.70000076	0	1	0	1	0	placeb
+sample_220	0	P094	5.581395349	24	0	1	0	0	0	lactob DR20
+sample_221	0	P101	7	16	0	1	0	0	0	lactob DR20
+sample_223	0	P104	13	NA	0	0	0	0	0	lactob DR20
+sample_224	0	P106	9	1	0	1	0	1	0	lactob DR20
+sample_225	0	P112	22	38.97	0	1	0	0	0	lactob DR20
+sample_226	0	P115	5.093023167	13	0	0	0	0	0	lactob DR20
+sample_227	0	P122	24	NA	0	0	0	0	0	lactob DR20
+sample_228	0	P040	5.581395349	17.60000038	1	1	0	0	0	lactob DR20
+sample_230	0	P051	5.093023167	0	0	1	0	1	0	bifido DR10
+sample_231	0	P052	11	0	0	1	0	1	1	placeb
+sample_232	0	P055	9	38.97	0	1	0	0	0	placeb
+sample_233	0	P062	21	56.29	0	0	0	0	0	bifido DR10
+sample_234	0	P068	8	16	0	0	0	0	0	lactob DR20
+sample_235	0	P071	5.813953488	4	0	0	0	1	0	bifido DR10
+sample_236	0	P073	5.348837209	1.5	0	0	0	0	0	bifido DR10
+sample_237	0	P079	1.162790698	5	0	0	0	0	0	placeb
+sample_238	0	P080	4.651162791	4	0	1	0	0	1	placeb
+sample_239	0	P081	14	49.795	0	0	0	1	0	lactob DR20
+sample_240	0	P083	6.046511628	18.60000038	0	1	0	0	0	bifido DR10
+sample_241	0	P093	13	NA	0	1	0	0	0	placeb
+sample_242	0	P096	8	17.60000038	0	0	0	0	0	bifido DR10
+sample_243	0	P099	5.093023167	1	0	1	0	1	0	bifido DR10
+sample_244	0	P109	24	NA	0	1	0	0	0	bifido DR10
+sample_245	0	P110	0.465116279	1	0	1	0	1	0	bifido DR10
+sample_246	0	P111	12	47.63	0	0	0	1	0	placeb
+sample_247	0	P116	24	24	0	0	1	1	0	bifido DR10
+sample_248	0	P120	15.5	47.63	0	1	0	0	0	placeb
+sample_249	0	P123	9	30.31	1	1	0	0	0	placeb
+sample_250	0	P124	10.5	5	0	0	0	0	0	bifido DR10
+sample_251	0	P125	5.581395349	20	0	1	0	1	0	lactob DR20
+sample_252	0	P146	10.5	24.29999924	0	1	0	0	1	lactob DR20
+sample_253	0	P162	10	2	0	0	0	0	0	lactob DR20
+sample_254	0	P171	12.5	38.97	1	0	0	0	0	placeb
+sample_255	0	P175	24	NA	0	0	0	0	1	placeb
+sample_256	0	P183	12.5	17.70000076	0	1	0	1	1	placeb
+sample_257	0	P136	11.5	25.98	0	1	0	1	0	placeb
+sample_258	0	P169	6	8.699999809	0	1	0	1	0	placeb
+sample_259	0	P197	17.5	30.31	0	0	0	1	0	placeb
+sample_262	0	P185	1.744186047	7	0	0	0	0	1	placeb
+sample_265	0	P200	11	43.3	0	0	0	0	0	placeb
+sample_266	0	P128	19	8	0	1	0	0	0	placeb
+sample_267	0	P129	11.5	2	0	1	0	1	0	bifido DR10
+sample_268	0	P130	14.5	7	0	1	0	0	0	bifido DR10
+sample_269	0	P132	24	0	1	0	0	1	0	lactob DR20
+sample_270	0	P134	9.5	34.64	0	1	0	1	0	placeb
+sample_272	0	P147	16	NA	0	0	0	0	0	lactob DR20
+sample_274	0	P155	15	NA	0	0	0	0	0	lactob DR20
+sample_275	0	P163	14	2	0	1	0	0	0	lactob DR20
+sample_276	0	P166	1.790697674	0	0	0	0	1	0	lactob DR20
+sample_278	0	P180	12	0	0	1	0	1	0	lactob DR20
+sample_279	0	P184	16.5	NA	0	0	0	0	0	lactob DR20
+sample_280	0	P191	24	25	0	1	0	0	0	lactob DR20
+sample_281	0	P204	1.046511628	3	0	0	0	0	0	lactob DR20
+sample_284	0	P214	7	0	0	0	0	0	1	placeb
+sample_285	0	P682	11.75	47.63	1	0	0	0	0	lactob DR20
+sample_294	0	P680	7.5	4.5	0	0	0	0	0	placeb
+sample_312	0	P675	20	0	0	1	0	1	0	placeb
+sample_321	0	P671	14.5	0	0	1	0	1	0	placeb
+sample_330	0	P670	11.5	NA	0	1	0	0	0	placeb
+sample_331	0	P694	9	10	0	1	0	1	0	placeb
+sample_337	0	P668	13.5	51.96	0	0	0	0	0	lactob DR20
+sample_345	0	P667	13	28.145	0	1	0	1	0	lactob DR20
+sample_346	0	P684	8.5	30.31	0	1	0	1	1	lactob DR20
+sample_355	0	P683	17	NA	0	0	0	1	0	placeb
+sample_376	0	P752	11	34.64	0	0	0	0	0	placeb
+sample_377	0	P757	10	4	0	0	0	1	0	lactob DR20
+sample_383	0	P732	19	5	0	1	0	0	0	lactob DR20
+sample_384	0	P740	14	0	0	0	0	1	0	placeb
+sample_385	0	P741	5.348837209	11	1	1	0	1	1	lactob DR20
+sample_386	0	P709	9.5	36.805	0	1	0	0	0	placeb
+sample_387	0	P710	16	28.145	0	1	0	1	0	lactob DR20
+sample_388	0	P711	6.5	28.145	0	1	0	0	0	placeb
+sample_389	0	P717	4.651162791	11	0	0	0	0	0	lactob DR20
+sample_392	0	P726	12.5	NA	1	0	0	0	0	placeb
+sample_395	0	P612	9	19	0	0	0	0	0	placeb
+sample_396	0	P613	9	16	0	1	0	0	0	lactob DR20
+sample_397	0	P683	17	NA	0	0	0	1	0	placeb
+sample_401	0	P591	16	43.3	1	1	0	0	0	placeb
+sample_436	0	P569	5.348837209	22	0	0	0	0	0	lactob DR20
+sample_440	0	P620	9	34.64	0	1	0	0	0	placeb
+sample_488	0	P121	22	0	0	1	0	0	0	lactob DR20
+sample_489	0	P127	15	30.31	0	1	0	1	0	lactob DR20
+sample_490	0	P087	2.093023256	0	0	1	0	0	0	placeb
+sample_493	0	P509	23	NA	0	0	0	0	0	lactob DR20
+sample_494	0	P512	15	38.97	0	1	0	0	1	placeb
+sample_499	0	P031	3.186046467	4	1	0	0	0	0	lactob DR20
+sample_502	0	P022	12	NA	0	0	0	0	0	lactob DR20
+sample_505	0	P010	10	0	0	1	0	0	0	bifido DR10
+sample_506	0	P006	10	19.60000038	0	1	0	0	0	placeb
+sample_513	0	P525	10	43.3	0	0	0	1	0	lactob DR20
+sample_514	0	P731	7.5	0	0	1	0	0	1	placeb
+sample_517	0	P602	7	3	0	0	0	0	0	lactob DR20
+sample_520	0	P545	18.10000038	34.64	0	1	0	1	0	placeb
+sample_523	0	P516	9	11	0	1	0	1	0	lactob DR20
+NZGL01012_sample_047	3	P045	17	34.64	0	1	0	0	0	lactob DR20
+NZGL01012_sample_049	3	P054	11	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_050	3	P059	13	20	1	0	0	0	1	lactob DR20
+NZGL01012_sample_051	3	P075	6.046511628	9	0	1	0	0	0	lactob DR20
+NZGL01012_sample_052	3	P127	15	30.31	0	1	0	1	0	lactob DR20
+NZGL01012_sample_053	3	P146	10.5	24.29999924	0	1	0	0	1	lactob DR20
+NZGL01012_sample_055	3	P640	10	21	0	1	0	0	1	lactob DR20
+NZGL01012_sample_056	3	P651	8	0.5	0	0	0	0	1	lactob DR20
+NZGL01012_sample_067	3	P007	0.930232558	1	0	1	0	0	1	placeb
+NZGL01012_sample_069	3	P028	13	NA	0	1	0	1	1	placeb
+NZGL01012_sample_071	3	P067	6.5	4	0	1	0	0	1	placeb
+NZGL01012_sample_072	3	P090	10.5	19.70000076	0	1	0	1	0	placeb
+NZGL01012_sample_073	3	P175	24	NA	0	0	0	0	1	placeb
+NZGL01012_sample_074	3	P177	10	4	0	1	0	0	0	placeb
+NZGL01012_sample_076	3	P253	12	22	0	0	0	1	0	placeb
+NZGL01012_sample_097	3	P012	2.906976744	12	0	0	0	1	0	lactob DR20
+NZGL01012_sample_098	3	P016	8	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_099	3	P041	12.5	51.96	0	0	0	0	0	lactob DR20
+NZGL01012_sample_102	3	P085	8	0	0	1	1	0	0	lactob DR20
+NZGL01012_sample_103	3	P094	5.581395349	24	0	1	0	0	0	lactob DR20
+NZGL01012_sample_104	3	P101	7	16	0	1	0	0	0	lactob DR20
+NZGL01012_sample_105	3	P162	10	2	0	0	0	0	0	lactob DR20
+NZGL01012_sample_106	3	P646	6.5	4	0	0	0	0	0	lactob DR20
+sample_001	3	P659	11.5	NA	0	0	0	0	0	placeb
+sample_008	3	P580	2.093023256	0	0	0	0	0	0	placeb
+sample_017	3	P757	10	4	0	0	0	1	0	lactob DR20
+sample_019	3	P670	11.5	NA	0	1	0	0	0	placeb
+sample_021	3	P590	7.5	28.145	0	1	0	0	0	placeb
+sample_027	3	P601	8	34.64	0	0	0	1	0	lactob DR20
+sample_028	3	P525	10	43.3	0	0	0	1	0	lactob DR20
+sample_035	3	P602	7	3	0	0	0	0	0	lactob DR20
+sample_036	3	P676	7	10	0	1	0	0	0	lactob DR20
+sample_047	3	P604	7	0	0	0	0	1	1	placeb
+sample_054	3	P607	4.418604651	11	0	1	0	0	0	lactob DR20
+sample_055	3	P568	0.23255814	1	0	0	0	1	1	placeb
+sample_057	3	P740	14	0	0	0	0	1	0	placeb
+sample_060	3	P071	5.813953488	4	0	0	0	1	0	bifido DR10
+sample_063	3	P095	10	0	0	1	0	0	0	bifido DR10
+sample_064	3	P120	15.5	47.63	0	1	0	0	0	placeb
+sample_065	3	P143	0.465116279	0	0	1	0	0	1	placeb
+sample_066	3	P096	8	17.60000038	0	0	0	0	0	bifido DR10
+sample_067	3	P055	9	38.97	0	1	0	0	0	placeb
+sample_068	3	P099	5.093023167	1	0	1	0	1	0	bifido DR10
+sample_069	3	P125	5.581395349	20	0	1	0	1	0	lactob DR20
+sample_070	3	P051	5.093023167	0	0	1	0	1	0	bifido DR10
+sample_072	3	P129	11.5	2	0	1	0	1	0	bifido DR10
+sample_073	3	P115	5.093023167	13	0	0	0	0	0	lactob DR20
+sample_076	3	P227	3.488372093	0	0	1	0	0	1	placeb
+sample_077	3	P228	12	3	0	1	0	1	0	placeb
+sample_078	3	P238	20	0	0	1	0	0	0	placeb
+sample_079	3	P248	17.5	NA	0	0	0	0	0	lactob DR20
+sample_083	3	P249	13	1	0	1	0	0	1	lactob DR20
+sample_087	3	P254	19.5	NA	0	0	0	0	1	placeb
+sample_091	3	P255	12	30.31	0	0	0	0	0	lactob DR20
+sample_115	3	P006	10	19.60000038	0	1	0	0	0	placeb
+sample_127	3	P171	12.5	38.97	1	0	0	0	0	placeb
+sample_128	3	P103	8	21	0	1	0	0	0	placeb
+sample_132	3	P232	10.5	25	0	0	0	0	1	lactob DR20
+sample_159	3	P530	4.651162791	12	0	1	0	0	0	lactob DR20
+sample_161	3	P538	3.255813954	2	0	0	0	0	0	placeb
+sample_163	3	P552	20	51.96	0	0	0	0	1	placeb
+sample_164	3	P548	8	24	0	1	0	0	1	lactob DR20
+sample_166	3	P545	18.10000038	34.64	0	1	0	1	0	placeb
+sample_168	3	P555	12.5	2	0	0	0	0	0	placeb
+sample_406	3	P721	5.697674419	18	0	0	0	0	0	placeb
+sample_407	3	P726	12.5	NA	1	0	0	0	0	placeb
+sample_408	3	P729	16	NA	0	0	0	1	0	placeb
+sample_409	3	P731	7.5	0	0	1	0	0	1	placeb
+sample_410	3	P732	19	5	0	1	0	0	0	lactob DR20
+sample_411	3	P709	9.5	36.805	0	1	0	0	0	placeb
+sample_412	3	P710	16	28.145	0	1	0	1	0	lactob DR20
+sample_413	3	P711	6.5	28.145	0	1	0	0	0	placeb
+sample_414	3	P717	4.651162791	11	0	0	0	0	0	lactob DR20
+sample_416	3	P700	5.348837209	4	0	0	1	0	0	lactob DR20
+sample_417	3	P702	8	0	0	0	0	0	0	placeb
+sample_418	3	P704	7.5	0	1	0	0	0	0	lactob DR20
+sample_419	3	P688	5.348837209	22	0	1	0	0	0	placeb
+sample_421	3	P680	7.5	4.5	0	0	0	0	0	placeb
+sample_422	3	P682	11.75	47.63	1	0	0	0	0	lactob DR20
+sample_424	3	P685	9	13	1	0	0	0	1	lactob DR20
+sample_435	3	P612	9	19	0	0	0	0	0	placeb
+sample_437	3	P617	0.697674419	3	1	0	0	1	0	placeb
+sample_438	3	P528	7	16	0	1	0	0	0	placeb
+sample_441	3	P644	9.5	28.145	0	1	0	1	1	placeb
+sample_443	3	P654	9	21	0	0	0	0	0	placeb
+sample_444	3	P656	22	NA	0	1	0	0	0	lactob DR20
+sample_445	3	P664	7.5	0	0	1	0	0	0	placeb
+sample_446	3	P665	9	7	0	0	0	0	0	lactob DR20
+sample_448	3	P667	13	28.145	0	1	0	1	0	lactob DR20
+sample_453	3	P050	11	30.31	0	0	0	1	1	placeb
+sample_454	3	P040	5.581395349	17.60000038	1	1	0	0	0	lactob DR20
+sample_455	3	P058	21	NA	0	0	0	0	0	placeb
+sample_456	3	P062	21	56.29	0	0	0	0	0	bifido DR10
+sample_457	3	P079	1.162790698	5	0	0	0	0	0	placeb
+sample_458	3	P080	4.651162791	4	0	1	0	0	1	placeb
+sample_459	3	P089	5.255814042	1	0	1	0	0	0	bifido DR10
+sample_460	3	P087	2.093023256	0	0	1	0	0	0	placeb
+sample_461	3	P093	13	NA	0	1	0	0	0	placeb
+sample_462	3	P111	12	47.63	0	0	0	1	0	placeb
+sample_463	3	P109	24	NA	0	1	0	0	0	bifido DR10
+sample_465	3	P128	19	8	0	1	0	0	0	placeb
+sample_466	3	P120	15.5	47.63	0	1	0	0	0	placeb
+sample_467	3	P122	24	NA	0	0	0	0	0	lactob DR20
+sample_469	3	P134	9.5	34.64	0	1	0	1	0	placeb
+sample_470	3	P136	11.5	25.98	0	1	0	1	0	placeb
+sample_471	3	P139	11.5	47.63	0	1	0	0	1	lactob DR20
+sample_472	3	P147	16	NA	0	0	0	0	0	lactob DR20
+sample_473	3	P148	22	0	0	0	0	0	0	placeb
+sample_482	3	P166	1.790697674	0	0	0	0	1	0	lactob DR20
+sample_483	3	P649	0.930232558	4	0	0	0	1	0	placeb
+sample_484	3	P650	11.5	43.3	0	0	0	0	1	placeb
+sample_486	3	P631	24	0	0	0	0	0	0	placeb
+sample_487	3	P620	9	34.64	0	1	0	0	0	placeb
+sample_492	3	P748	14.5	28.145	0	0	0	1	0	lactob DR20
+sample_498	3	P034	4.813953666	12	0	0	0	1	1	placeb
+sample_500	3	P031	3.186046467	4	1	0	0	0	0	lactob DR20
+sample_503	3	P022	12	NA	0	0	0	0	0	lactob DR20
+sample_512	3	P068	8	16	0	0	0	0	0	lactob DR20
+sample_519	3	P569	5.348837209	22	0	0	0	0	0	lactob DR20
+sample_521	3	P566	18.10000038	8	0	1	0	1	0	placeb
+sample_522	3	P589	7	24	0	0	0	1	0	lactob DR20
+sample_527	3	P591	16	43.3	1	1	0	0	0	placeb
+sample_528	3	P577	12.5	NA	0	1	0	0	0	placeb
+NZGL01012_sample_028	12	P082	13	NA	0	0	0	0	0	placeb
+NZGL01012_sample_029	12	P087	2.093023256	0	0	1	0	0	0	placeb
+NZGL01012_sample_030	12	P103	8	21	0	1	0	0	0	placeb
+NZGL01012_sample_031	12	P148	22	0	0	0	0	0	0	placeb
+NZGL01012_sample_032	12	P514	6.5	16	0	0	0	0	0	placeb
+NZGL01012_sample_033	12	P577	12.5	NA	0	1	0	0	0	placeb
+NZGL01012_sample_034	12	P608	7	8	0	0	0	0	0	placeb
+NZGL01012_sample_035	12	P628	13	36.805	0	0	0	0	0	placeb
+NZGL01012_sample_037	12	P045	17	34.64	0	1	0	0	0	lactob DR20
+NZGL01012_sample_039	12	P054	11	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_040	12	P059	13	20	1	0	0	0	1	lactob DR20
+NZGL01012_sample_041	12	P075	6.046511628	9	0	1	0	0	0	lactob DR20
+NZGL01012_sample_042	12	P127	15	30.31	0	1	0	1	0	lactob DR20
+NZGL01012_sample_043	12	P146	10.5	24.29999924	0	1	0	0	1	lactob DR20
+NZGL01012_sample_044	12	P161	6.093023433	0	0	1	0	1	0	lactob DR20
+NZGL01012_sample_077	12	P007	0.930232558	1	0	1	0	0	1	placeb
+NZGL01012_sample_078	12	P020	NA	0	0	1	1	0	1	placeb
+NZGL01012_sample_079	12	P028	13	NA	0	1	0	1	1	placeb
+NZGL01012_sample_082	12	P090	10.5	19.70000076	0	1	0	1	0	placeb
+NZGL01012_sample_083	12	P175	24	NA	0	0	0	0	1	placeb
+NZGL01012_sample_084	12	P177	10	4	0	1	0	0	0	placeb
+NZGL01012_sample_085	12	P183	12.5	17.70000076	0	1	0	1	1	placeb
+NZGL01012_sample_107	12	P012	2.906976744	12	0	0	0	1	0	lactob DR20
+NZGL01012_sample_108	12	P016	8	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_109	12	P041	12.5	51.96	0	0	0	0	0	lactob DR20
+NZGL01012_sample_110	12	P048	2.558139535	1.5	1	0	0	0	0	lactob DR20
+NZGL01012_sample_111	12	P074	8.5	19.70000076	0	1	0	1	0	lactob DR20
+NZGL01012_sample_112	12	P085	8	0	0	1	1	0	0	lactob DR20
+NZGL01012_sample_113	12	P094	5.581395349	24	0	1	0	0	0	lactob DR20
+NZGL01012_sample_114	12	P101	7	16	0	1	0	0	0	lactob DR20
+NZGL01012_sample_115	12	P162	10	2	0	0	0	0	0	lactob DR20
+NZGL01012_sample_116	12	P646	6.5	4	0	0	0	0	0	lactob DR20
+sample_006	12	P726	12.5	NA	1	0	0	0	0	placeb
+sample_007	12	P711	6.5	28.145	0	1	0	0	0	placeb
+sample_014	12	P702	8	0	0	0	0	0	0	placeb
+sample_015	12	P671	14.5	0	0	1	0	1	0	placeb
+sample_026	12	P741	5.348837209	11	1	1	0	1	1	lactob DR20
+sample_034	12	P704	7.5	0	1	0	0	0	0	lactob DR20
+sample_046	12	P729	16	NA	0	0	0	1	0	placeb
+sample_053	12	P717	4.651162791	11	0	0	0	0	0	lactob DR20
+sample_075	12	P225	13.5	30.31	0	1	0	0	1	lactob DR20
+sample_080	12	P214	7	0	0	0	0	0	1	placeb
+sample_085	12	P228	12	3	0	1	0	1	0	placeb
+sample_086	12	P238	20	0	0	1	0	0	0	placeb
+sample_089	12	P232	10.5	25	0	0	0	0	1	lactob DR20
+sample_090	12	P254	19.5	NA	0	0	0	0	1	placeb
+sample_092	12	P255	12	30.31	0	0	0	0	0	lactob DR20
+sample_093	12	P006	10	19.60000038	0	1	0	0	0	placeb
+sample_094	12	P031	3.186046467	4	1	0	0	0	0	lactob DR20
+sample_095	12	P032	1.395348837	3	0	1	0	0	1	placeb
+sample_096	12	P034	4.813953666	12	0	0	0	1	1	placeb
+sample_097	12	P050	11	30.31	0	0	0	1	1	placeb
+sample_098	12	P051	5.093023167	0	0	1	0	1	0	bifido DR10
+sample_099	12	P052	11	0	0	1	0	1	1	placeb
+sample_100	12	P055	9	38.97	0	1	0	0	0	placeb
+sample_101	12	P057	15	43.3	0	1	1	1	0	bifido DR10
+sample_102	12	P058	21	NA	0	0	0	0	0	placeb
+sample_103	12	P062	21	56.29	0	0	0	0	0	bifido DR10
+sample_104	12	P068	8	16	0	0	0	0	0	lactob DR20
+sample_105	12	P071	5.813953488	4	0	0	0	1	0	bifido DR10
+sample_107	12	P089	5.255814042	1	0	1	0	0	0	bifido DR10
+sample_108	12	P095	10	0	0	1	0	0	0	bifido DR10
+sample_110	12	P080	4.651162791	4	0	1	0	0	1	placeb
+sample_133	12	P197	17.5	30.31	0	0	0	1	0	placeb
+sample_169	12	P604	7	0	0	0	0	1	1	placeb
+sample_171	12	P602	7	3	0	0	0	0	0	lactob DR20
+sample_172	12	P601	8	34.64	0	0	0	1	0	lactob DR20
+sample_173	12	P589	7	24	0	0	0	1	0	lactob DR20
+sample_174	12	P613	9	16	0	1	0	0	0	lactob DR20
+sample_175	12	P612	9	19	0	0	0	0	0	placeb
+sample_176	12	P611	12.5	8	0	0	0	0	0	placeb
+sample_177	12	P607	4.418604651	11	0	1	0	0	0	lactob DR20
+sample_178	12	P620	9	34.64	0	1	0	0	0	placeb
+sample_179	12	P664	7.5	0	0	1	0	0	0	placeb
+sample_180	12	P656	22	NA	0	1	0	0	0	lactob DR20
+sample_181	12	P652	12.5	10	0	0	0	0	0	lactob DR20
+sample_182	12	P650	11.5	43.3	0	0	0	0	1	placeb
+sample_183	12	P649	0.930232558	4	0	0	0	1	0	placeb
+sample_184	12	P644	9.5	28.145	0	1	0	1	1	placeb
+sample_186	12	P659	11.5	NA	0	0	0	0	0	placeb
+sample_287	12	P591	16	43.3	1	1	0	0	0	placeb
+sample_288	12	P552	20	51.96	0	0	0	0	1	placeb
+sample_291	12	P169	6	8.699999809	0	1	0	1	0	placeb
+sample_292	12	P122	24	NA	0	0	0	0	0	lactob DR20
+sample_293	12	P111	12	47.63	0	0	0	1	0	placeb
+sample_296	12	P590	7.5	28.145	0	1	0	0	0	placeb
+sample_297	12	P569	5.348837209	22	0	0	0	0	0	lactob DR20
+sample_298	12	P529	9	6	0	1	0	0	0	lactob DR20
+sample_299	12	P185	1.744186047	7	0	0	0	0	1	placeb
+sample_301	12	P121	22	0	0	1	0	0	0	lactob DR20
+sample_302	12	P110	0.465116279	1	0	1	0	1	0	bifido DR10
+sample_305	12	P582	7.5	30.31	0	0	0	0	1	lactob DR20
+sample_306	12	P568	0.23255814	1	0	0	0	1	1	placeb
+sample_307	12	P528	7	16	0	1	0	0	0	placeb
+sample_308	12	P513	11	24	0	0	0	0	0	lactob DR20
+sample_309	12	P163	14	2	0	1	0	0	0	lactob DR20
+sample_310	12	P143	0.465116279	0	0	1	0	0	1	placeb
+sample_311	12	P109	24	NA	0	1	0	0	0	bifido DR10
+sample_314	12	P116	24	24	0	0	1	1	0	bifido DR10
+sample_315	12	P566	18.10000038	8	0	1	0	1	0	placeb
+sample_316	12	P548	8	24	0	1	0	0	1	lactob DR20
+sample_318	12	P147	16	NA	0	0	0	0	0	lactob DR20
+sample_319	12	P139	11.5	47.63	0	1	0	0	1	lactob DR20
+sample_320	12	P130	14.5	7	0	1	0	0	0	bifido DR10
+sample_323	12	P096	8	17.60000038	0	0	0	0	0	bifido DR10
+sample_324	12	P562	4.88372093	13	0	1	0	1	0	lactob DR20
+sample_325	12	P546	23.5	0	0	0	0	1	0	lactob DR20
+sample_327	12	P155	15	NA	0	0	0	0	0	lactob DR20
+sample_328	12	P136	11.5	25.98	0	1	0	1	0	placeb
+sample_329	12	P129	11.5	2	0	1	0	1	0	bifido DR10
+sample_333	12	P545	18.10000038	34.64	0	1	0	1	0	placeb
+sample_334	12	P516	9	11	0	1	0	1	0	lactob DR20
+sample_335	12	P180	12	0	0	1	0	1	0	lactob DR20
+sample_336	12	P134	9.5	34.64	0	1	0	1	0	placeb
+sample_340	12	P580	2.093023256	0	0	0	0	0	0	placeb
+sample_341	12	P515	3.953488372	0	0	0	0	1	0	placeb
+sample_342	12	P171	12.5	38.97	1	0	0	0	0	placeb
+sample_344	12	P125	5.581395349	20	0	1	0	1	0	lactob DR20
+sample_348	12	P579	14	0	0	0	0	0	0	placeb
+sample_349	12	P557	NA	0	1	1	1	0	0	lactob DR20
+sample_350	12	P534	10	38.97	0	1	0	1	0	lactob DR20
+sample_351	12	P192	4.255813776	18.29999924	0	0	0	0	1	placeb
+sample_352	12	P154	12.5	24	1	1	0	0	0	placeb
+sample_353	12	P124	10.5	5	0	0	0	0	0	bifido DR10
+sample_357	12	P575	12.10000038	11	0	1	0	0	0	lactob DR20
+sample_358	12	P555	12.5	2	0	0	0	0	0	placeb
+sample_359	12	P531	12.5	12	0	0	0	0	0	placeb
+sample_360	12	P191	24	25	0	1	0	0	0	lactob DR20
+sample_362	12	P123	9	30.31	1	1	0	0	0	placeb
+sample_363	12	P112	22	38.97	0	1	0	0	0	lactob DR20
+sample_364	12	P115	5.093023167	13	0	0	0	0	0	lactob DR20
+sample_365	12	P120	15.5	47.63	0	1	0	0	0	placeb
+sample_366	12	P104	13	NA	0	0	0	0	0	lactob DR20
+sample_369	12	P081	14	49.795	0	0	0	1	0	lactob DR20
+sample_370	12	P083	6.046511628	18.60000038	0	1	0	0	0	bifido DR10
+sample_373	12	P022	12	NA	0	0	0	0	0	lactob DR20
+sample_374	12	P023	1.860465116	0	0	1	0	0	0	bifido DR10
+sample_375	12	P027	9	1.5	0	0	0	0	0	bifido DR10
+sample_382	12	P709	9.5	36.805	0	1	0	0	0	placeb
+sample_393	12	P752	11	34.64	0	0	0	0	0	placeb
+sample_394	12	P747	6.5	21	0	0	0	0	0	placeb
+sample_404	12	P719	14.5	45.465	0	0	0	0	0	placeb
+sample_425	12	P682	11.75	47.63	1	0	0	0	0	lactob DR20
+sample_426	12	P683	17	NA	0	0	0	1	0	placeb
+sample_427	12	P751	6.5	10	1	1	0	0	0	placeb
+sample_428	12	P700	5.348837209	4	0	0	1	0	0	lactob DR20
+sample_429	12	P688	5.348837209	22	0	1	0	0	0	placeb
+sample_430	12	P668	13.5	51.96	0	0	0	0	0	lactob DR20
+sample_432	12	P710	16	28.145	0	1	0	1	0	lactob DR20
+sample_433	12	P684	8.5	30.31	0	1	0	1	1	lactob DR20
+sample_474	12	P248	17.5	NA	0	0	0	0	0	lactob DR20
+sample_476	12	P211	7.5	1.5	0	1	0	0	0	lactob DR20
+sample_477	12	P219	11	2	0	1	0	0	0	placeb
+sample_478	12	P200	11	43.3	0	0	0	0	0	placeb
+sample_479	12	P204	1.046511628	3	0	0	0	0	0	lactob DR20
+sample_480	12	P205	9.5	0	0	1	0	0	0	lactob DR20
+sample_481	12	P196	10	NA	0	0	0	0	0	lactob DR20
+sample_496	12	P675	20	0	0	1	0	1	0	placeb
+sample_525	12	P731	7.5	0	0	1	0	0	1	placeb
+NZGL01012_sample_001	24	P006	10	19.60000038	0	1	0	0	0	placeb
+NZGL01012_sample_007	24	P570	NA	NA	0	0	0	0	0	placeb
+NZGL01012_sample_011	24	P154	12.5	24	1	1	0	0	0	placeb
+NZGL01012_sample_012	24	P555	12.5	2	0	0	0	0	0	placeb
+NZGL01012_sample_013	24	P591	16	43.3	1	1	0	0	0	placeb
+NZGL01012_sample_014	24	P579	14	0	0	0	0	0	0	placeb
+NZGL01012_sample_016	24	P702	8	0	0	0	0	0	0	placeb
+NZGL01012_sample_017	24	P082	13	NA	0	0	0	0	0	placeb
+NZGL01012_sample_018	24	P087	2.093023256	0	0	1	0	0	0	placeb
+NZGL01012_sample_020	24	P148	22	0	0	0	0	0	0	placeb
+NZGL01012_sample_022	24	P577	12.5	NA	0	1	0	0	0	placeb
+NZGL01012_sample_023	24	P608	7	8	0	0	0	0	0	placeb
+NZGL01012_sample_024	24	P628	13	36.805	0	0	0	0	0	placeb
+NZGL01012_sample_027	24	P709	9.5	36.805	0	1	0	0	0	placeb
+NZGL01012_sample_057	24	P045	17	34.64	0	1	0	0	0	lactob DR20
+NZGL01012_sample_059	24	P054	11	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_060	24	P059	13	20	1	0	0	0	1	lactob DR20
+NZGL01012_sample_061	24	P075	6.046511628	9	0	1	0	0	0	lactob DR20
+NZGL01012_sample_062	24	P127	15	30.31	0	1	0	1	0	lactob DR20
+NZGL01012_sample_063	24	P146	10.5	24.29999924	0	1	0	0	1	lactob DR20
+NZGL01012_sample_064	24	P161	6.093023433	0	0	1	0	1	0	lactob DR20
+NZGL01012_sample_065	24	P640	10	21	0	1	0	0	1	lactob DR20
+NZGL01012_sample_087	24	P007	0.930232558	1	0	1	0	0	1	placeb
+NZGL01012_sample_089	24	P028	13	NA	0	1	0	1	1	placeb
+NZGL01012_sample_091	24	P067	6.5	4	0	1	0	0	1	placeb
+NZGL01012_sample_092	24	P090	10.5	19.70000076	0	1	0	1	0	placeb
+NZGL01012_sample_094	24	P177	10	4	0	1	0	0	0	placeb
+NZGL01012_sample_095	24	P183	12.5	17.70000076	0	1	0	1	1	placeb
+NZGL01012_sample_096	24	P253	12	22	0	0	0	1	0	placeb
+NZGL01012_sample_118	24	P016	8	6	0	0	0	0	0	lactob DR20
+NZGL01012_sample_119	24	P041	12.5	51.96	0	0	0	0	0	lactob DR20
+NZGL01012_sample_120	24	P048	2.558139535	1.5	1	0	0	0	0	lactob DR20
+NZGL01012_sample_121	24	P074	8.5	19.70000076	0	1	0	1	0	lactob DR20
+NZGL01012_sample_122	24	P085	8	0	0	1	1	0	0	lactob DR20
+NZGL01012_sample_124	24	P101	7	16	0	1	0	0	0	lactob DR20
+NZGL01012_sample_125	24	P162	10	2	0	0	0	0	0	lactob DR20
+NZGL01012_sample_126	24	P646	6.5	4	0	0	0	0	0	lactob DR20
+NZGL01012_sample_127	24	P104	13	NA	0	0	0	0	0	lactob DR20
+NZGL01012_sample_128	24	P106	9	1	0	1	0	1	0	lactob DR20
+NZGL01012_sample_130	24	P115	5.093023167	13	0	0	0	0	0	lactob DR20
+NZGL01012_sample_131	24	P121	22	0	0	1	0	0	0	lactob DR20
+NZGL01012_sample_132	24	P122	24	NA	0	0	0	0	0	lactob DR20
+sample_005	24	P529	9	6	0	1	0	0	0	lactob DR20
+sample_018	24	P531	12.5	12	0	0	0	0	0	placeb
+sample_025	24	P534	10	38.97	0	1	0	1	0	lactob DR20
+sample_032	24	P538	3.255813954	2	0	0	0	0	0	placeb
+sample_033	24	P509	23	NA	0	0	0	0	0	lactob DR20
+sample_039	24	P545	18.10000038	34.64	0	1	0	1	0	placeb
+sample_040	24	P512	15	38.97	0	1	0	0	1	placeb
+sample_045	24	P513	11	24	0	0	0	0	0	lactob DR20
+sample_051	24	P552	20	51.96	0	0	0	0	1	placeb
+sample_058	24	P528	7	16	0	1	0	0	0	placeb
+sample_111	24	P166	1.790697674	0	0	0	0	1	0	lactob DR20
+sample_112	24	P167	10	23.60000038	0	1	0	0	0	lactob DR20
+sample_113	24	P200	11	43.3	0	0	0	0	0	placeb
+sample_114	24	P249	13	1	0	1	0	0	1	lactob DR20
+sample_121	24	P155	15	NA	0	0	0	0	0	lactob DR20
+sample_122	24	P109	24	NA	0	1	0	0	0	bifido DR10
+sample_123	24	P052	11	0	0	1	0	1	1	placeb
+sample_125	24	P068	8	16	0	0	0	0	0	lactob DR20
+sample_126	24	P050	11	30.31	0	0	0	1	1	placeb
+sample_131	24	P089	5.255814042	1	0	1	0	0	0	bifido DR10
+sample_148	24	P704	7.5	0	1	0	0	0	0	lactob DR20
+sample_149	24	P711	6.5	28.145	0	1	0	0	0	placeb
+sample_150	24	P700	5.348837209	4	0	0	1	0	0	lactob DR20
+sample_152	24	P729	16	NA	0	0	0	1	0	placeb
+sample_153	24	P710	16	28.145	0	1	0	1	0	lactob DR20
+sample_154	24	P741	5.348837209	11	1	1	0	1	1	lactob DR20
+sample_155	24	P751	6.5	10	1	1	0	0	0	placeb
+sample_187	24	P602	7	3	0	0	0	0	0	lactob DR20
+sample_188	24	P589	7	24	0	0	0	1	0	lactob DR20
+sample_190	24	P649	0.930232558	4	0	0	0	1	0	placeb
+sample_191	24	P644	9.5	28.145	0	1	0	1	1	placeb
+sample_192	24	P631	24	0	0	0	0	0	0	placeb
+sample_193	24	P612	9	19	0	0	0	0	0	placeb
+sample_194	24	P675	20	0	0	1	0	1	0	placeb
+sample_196	24	P659	11.5	NA	0	0	0	0	0	placeb
+sample_197	24	P656	22	NA	0	1	0	0	0	lactob DR20
+sample_198	24	P650	11.5	43.3	0	0	0	0	1	placeb
+sample_199	24	P688	5.348837209	22	0	1	0	0	0	placeb
+sample_200	24	P683	17	NA	0	0	0	1	0	placeb
+sample_202	24	P726	12.5	NA	1	0	0	0	0	placeb
+sample_203	24	P717	4.651162791	11	0	0	0	0	0	lactob DR20
+sample_204	24	P752	11	34.64	0	0	0	0	0	placeb
+sample_206	24	P758	11	36.805	0	1	0	0	0	placeb
+sample_207	24	P747	6.5	21	0	0	0	0	0	placeb
+sample_286	24	P031	3.186046467	4	1	0	0	0	0	lactob DR20
+sample_295	24	P027	9	1.5	0	0	0	0	0	bifido DR10
+sample_304	24	P055	9	38.97	0	1	0	0	0	placeb
+sample_313	24	P051	5.093023167	0	0	1	0	1	0	bifido DR10
+sample_332	24	P023	1.860465116	0	0	1	0	0	0	bifido DR10
+sample_339	24	P022	12	NA	0	0	0	0	0	lactob DR20
+sample_347	24	P010	10	0	0	1	0	0	0	bifido DR10
+sample_356	24	P040	5.581395349	17.60000038	1	1	0	0	0	lactob DR20
+sample_507	24	P034	4.813953666	12	0	0	0	1	1	placeb
+sample_508	24	P095	10	0	0	1	0	0	0	bifido DR10
+sample_509	24	P139	11.5	47.63	0	1	0	0	1	lactob DR20
+sample_511	24	P147	16	NA	0	0	0	0	0	lactob DR20
