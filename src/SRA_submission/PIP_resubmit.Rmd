@@ -1,0 +1,21 @@
+---
+title: "PIP_resubmit"
+output: html_document
+---
+
+```{r}
+Pip_biosample1<-read.delim("~/Cecilia/PIP_resubmit/PIP_biosamples1.tsv", header = T)
+SRA_meta1<-read.delim("~/Cecilia/PIP_resubmit/SRA_metadata_PIP_1.txt", header = T)
+SRA_meta1$biosample_accession<-Pip_biosample1$accession[match(SRA_meta1$library_ID, Pip_biosample1$sample_name)]
+
+write.table(SRA_meta1, "~/Cecilia/PIP_resubmit/SRA_metadata_PIP1_redo.txt", row.names = F, quote = F, sep = "\t")
+
+Pip_biosample2<-read.delim("~/Cecilia/PIP_resubmit/PIP_biosamples2.tsv", header = T)
+SRA_meta2<-read.delim("~/Cecilia/PIP_resubmit/SRA_metadata_PIP_2.txt", header = T)
+SRA_meta2$biosample_accession<-Pip_biosample2$accession[match(SRA_meta2$library_ID, Pip_biosample2$sample_name)]
+
+write.table(SRA_meta2, "~/Cecilia/PIP_resubmit/SRA_metadata_PIP2_redo.txt", row.names = F, quote = F, sep = "\t")
+
+# 4f84e9c504a446c38b2613bf08f2597d submition reference error
+
+```
