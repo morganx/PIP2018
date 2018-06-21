@@ -64,7 +64,7 @@ Chunk3: Plots regarding the relationships between E. coli abundance & age, E. co
 ```{r}
 NZGL_taxonomy$time<-as.factor(NZGL_taxonomy$time) # to separate boxplot by different age category, type of data used for x axis need to be factor
 #Plot the Abundance of Escherichia at different time points
-a<-ggplot(NZGL_taxonomy, aes(time, NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli))+geom_boxplot()+ggtitle("Abundance of Escherichia at different ages")+xlab("Time Point")+ylab("Rel Abundance E. coli")
+a<-ggplot(NZGL_taxonomy, aes(time, NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli))+geom_boxplot()+ggtitle("Abundance of Escherichia at different ages")+xlab("Age(months)")+ylab("Rel Abundance E. coli")
 Metadata<-read.csv("~/PIP2018/primary_data/metadata.csv", header = TRUE) # load csv file
 
 #Plot the Duration of storage of study fecal samples at room temperature before freezing
@@ -98,7 +98,8 @@ b<-ggplot(Escherichia_Meta, aes(Measurement_of_time))+geom_histogram(stat = "bin
 
 c<-ggplot(Escherichia_Meta, aes(color=factor(time), x=Measurement_of_time, y=Escherichia_growth)) +  geom_jitter(width = 0.25, height = 0.5) +  xlab("Time at room temperature") + ylab("Rel. abundance E. coli")
 
-ggarrange(a, b, c, labels=c("A", "B", "C", "D"), ncol=2, nrow=2)
+#ggarrange(a, b, c, labels=c("A", "B", "C", "D"), ncol=2, nrow=2)
+ggarrange(a, b, labels=c("A", "B"), ncol=2, nrow=1)
 
 ggsave("~/PIP2018/results/SupFig1.pdf", plot = last_plot(), device = NULL, path = NULL,
   scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
@@ -456,7 +457,6 @@ biff<-cbind(Taxonomy_filtered$time, as.character(Taxonomy_filtered$studygroup), 
 biff<-as.data.frame(biff)
 colnames(biff) = c("time", "studygroup", "b.animalis", "l.rhamnosus")
 
-levels(biff$time) = c(0, 3, 12, 24)
 biff$studygroup = factor(biff$studygroup)
 
 
@@ -466,11 +466,18 @@ biff$studygroup = gsub("bifido DR10", "b.lactis HN019", biff$studygroup)
 biff$studygroup = gsub("lactob DR20", "l.rhamnosus HN001", biff$studygroup)
 biff$studygroup = gsub("placeb", "placebo", biff$studygroup)
 
-c<-ggplot(biff, aes(y=log(b.animalis), x=studygroup, color=studygroup))
-c<- c + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
-d<-ggplot(biff, aes(y=log(l.rhamnosus), x=studygroup, color=studygroup))
+
+biff$time = gsub("0", "0 months", biff$time)
+biff$time = gsub("3", "3 months", biff$time)
+biff$time = gsub("12", "12 months", biff$time)
+biff$time = gsub("24", "24 months", biff$time)
+biff$time <- factor(biff$time, levels = c("0 months", "3 months", "12 months", "24 months"))
+
+c<-ggplot(biff, aes(y=b.animalis, x=studygroup, color=studygroup))
+c<- c + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif", label.y=c(1.75, 1.75, 1.75, 1.75)) + coord_cartesian(ylim=c(0, 1.75)) 
+d<-ggplot(biff, aes(y=l.rhamnosus, x=studygroup, color=studygroup))
           
-d<-d + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
+d<-d + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif", label.y=c(5, 5, 5, 5)) + coord_cartesian(ylim=c(0, 5)) 
 ggarrange(c, d, labels=c("A", "B"), common.legend=TRUE)
 
 ggsave("~/PIP2018/results/SupFig3.pdf", plot = last_plot(), device = NULL, path = NULL,

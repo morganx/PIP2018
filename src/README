@@ -26,4 +26,5 @@ Monte_carlo_pip_gitlab-FILTERED.RMD and Monte_carlo_pip_gitlab-UNFILTERED.RMD ge
 Reviewer2.RMD : a few plots we  made to answer Reviewer #2's questions. Also contains code to generate supplemental fig 14.
 
 
-
+SRA submission directory:
+Contains the mappings and biosample IDS for SRA data submission

@@ -1,0 +1,366 @@
+---
+title: "Monte_carlo_pip"
+author: "Cecilia Wang"
+date: "5/4/2017"
+output: pdf_document
+---
+```{r}
+library(ggplot2)
+library(phyloseq)
+library(plyr)
+library(vegan)
+library("biom")
+```
+
+#### NOTE: To make the code work,replace all the "$PATH" with the correct pathway that can get to the PIP folder
+
+#Plot4: Our power to detect effects
+```{r}
+
+#Monte Carlo for BUG and MODULE beta diversity: C-section, time, antibiotics, treatment #bf
+# source the functions for power test use Monte-carlo simulations
+source("$PATH/PIP/R_code/Monte_carlo_power_test.R")
+Meta_pip<-as.data.frame(Taxonomy_filtered[,c(1:28)])
+# NOTE: any category that tested here need to be factor. Therefore, transform every category as factors.
+Meta_pip[]<- lapply(Meta_pip, function(x){as.factor(x)})
+# load metadata (pcl file does not have the info)
+Metadata_pip<-read.csv("$PATH/PIP/primary_data/metadata.csv")
+# assign BF info to Meta_pip and reset the subsets
+Meta_pip$ageanyformula<-Metadata_pip$ageanyformula[match(Meta_pip$Studyid,Metadata_pip$Studyid)]
+####================Taxonomy test===================####
+## separate relative abundance data based on their associated metadata by time
+t<-as.data.frame(t(Taxonomy_filtered[,c(-1:-28)]))
+# subset metadata for further use of time stratefication
+Meta_at_birth<-subset(Meta_pip,time==0)
+Meta_3_month<-subset(Meta_pip, time ==3)
+Meta_12_month<-subset(Meta_pip, time ==12)
+Meta_24_month<-subset(Meta_pip, time ==24)
+Monte_carlo_time<-Power_CI_figure(t,seq(5,50,5), Meta_pip, "time", 30, 5 )
+
+pd <- position_dodge(0.1)
+ggplot(Monte_carlo_time,aes(Sampling_depth,mean)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd, color="red") +geom_line(position = pd, color="Blue") + geom_point(position = pd, color="darkblue")+xlab("Sampling_depth")+ylab("Power_mean")+ggtitle("Power test for time with 95% CI")
+
+## caesar
+ # figure out maximum sampling depth
+summary(Meta_at_birth$caesar) 
+summary(Meta_3_month$caesar)
+summary(Meta_12_month$caesar)
+summary(Meta_24_month$caesar)
+
+caeser_AB<-Power_CI_figure(t, seq(5,45,5), Meta_at_birth, "caesar", 30, 5 )
+caeser_AB$age<-"0"
+caeser_3month<-Power_CI_figure(t, seq(5,35,5), Meta_3_month, "caesar", 30, 5 )
+caeser_3month$age<-"3"
+caeser_12month<-Power_CI_figure(t, seq(5,45,5), Meta_12_month, "caesar", 30, 5 )
+caeser_12month$age<-"12"
+caeser_24month<-Power_CI_figure(t, seq(5,20,5), Meta_24_month, "caesar", 30, 5 )
+caeser_24month$age<-"24"
+
+Caesar_all_time<-rbind(caeser_AB,caeser_3month,caeser_12month,caeser_24month)
+Caesar_all_time$age<-as.factor(Caesar_all_time$age)
+
+ggplot(Caesar_all_time,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Caesar taxa without sample replacement") +ylab("Power mean")+ scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+## Antibiotics before 6 months
+  # figure out maximum sampling depth
+summary(Meta_at_birth$Antibiotics_before_6_months) 
+summary(Meta_3_month$Antibiotics_before_6_months)
+summary(Meta_12_month$Antibiotics_before_6_months)
+summary(Meta_24_month$Antibiotics_before_6_months)
+
+Anti6_AB<-Power_CI_figure(t,seq(5,20,5),Meta_at_birth, "Antibiotics_before_6_months", 30, 5 )
+Anti6_AB$age<-"0"
+Anti6_3month<-Power_CI_figure(t,seq(5,15,5),Meta_3_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_3month$age<-"3"
+Anti6_12month<-Power_CI_figure(t,seq(5,20,5),Meta_12_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_12month$age<-"12"
+Anti6_24month<-Power_CI_figure(t,seq(5,10,5),Meta_24_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_24month$age<-"24"
+
+Anti6_all_time<-rbind(Anti6_AB,Anti6_3month,Anti6_12month,Anti6_24month)
+Anti6_all_time$age<-as.factor(Anti6_all_time$age)
+ggplot(Anti6_all_time,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Antibiotics before 6 months (stratify by time) without sample replacement")+ylab("Power mean")+ scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+## Treatment/Studygroup
+  # figure out maximum sampling depth
+summary(Meta_at_birth$studygroup) 
+summary(Meta_3_month$studygroup)
+summary(Meta_12_month$studygroup)
+summary(Meta_24_month$studygroup)
+  # bifido group has very limited number of samples
+  # test with lactob and placeb groups
+Studygroup_meta<-subset(Meta_pip, studygroup != "bifido DR10")
+# reset the factor category studygroup
+Studygroup_meta$studygroup<-as.factor(as.character(Studygroup_meta$studygroup))
+SGmeta_AB<-subset(Studygroup_meta, time =="0")
+SGmeta_3month<-subset(Studygroup_meta, time == "3")
+SGmeta_12month<-subset(Studygroup_meta, time == "12")
+SGmeta_24month<-subset(Studygroup_meta, time =="24")
+
+SG_AB<-Power_CI_figure(t, seq(5,55,5), SGmeta_AB, "studygroup", 30, 5 )
+SG_AB$age<-"0"
+SG_3month<-Power_CI_figure(t, seq(5,50,5), SGmeta_3month, "studygroup", 30, 5 )
+SG_3month$age<-"3"
+SG_12month<-Power_CI_figure(t, seq(5,65,5), SGmeta_12month, "studygroup", 30, 5 )
+SG_12month$age<-"12"
+SG_24month<-Power_CI_figure(t, seq(5,40,5), SGmeta_24month, "studygroup", 30, 5 )
+SG_24month$age<-"24"
+
+SG_all_time<-rbind(SG_AB,SG_3month,SG_12month,SG_24month)
+SG_all_time$age<-as.factor(as.character(SG_all_time$age))
+ggplot(SG_all_time,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Lactobacillus DR10 & placebo (stratify by time) without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+## Any formular at each timepoint
+# bin the formula info to four bins (0,3,12,24)
+
+# figure out whether at a certain timpoint, if the baby have ever had any formula or not.
+Meta_pip_copy<-Meta_pip # make a copy so won't affect the format of original file/variable/category.
+# remove any sample that has NA in ageanyformula
+Meta_pip_copy$ageanyformula[is.na(Meta_pip_copy$ageanyformula)]<- 104 # 24 month 
+  # Need to compare the timpoint that sample has been collected with bf duration. To compare numbers between two sets of data, need to make sure the data is numeric, factors or characters can not be compared.
+Meta_pip_copy$time<-as.numeric(as.character(Meta_pip_copy$time))
+Meta_pip_copy$ageanyformula<-as.numeric(as.character(Meta_pip_copy$ageanyformula))
+Meta_pip_copy$ageanyformula<-(Meta_pip_copy$ageanyformula)/4 # ageanyformula is by weeks and now transformed to by month
+Meta_pip_copy$anyformula_when_sampling<-ifelse(Meta_pip_copy$ageanyformula>Meta_pip_copy$time, 0, 1)
+Meta_pip_copy$anyformula_when_sampling<-as.factor(Meta_pip_copy$anyformula_when_sampling) # make it a factor so can be summarised
+# update the subset metadata
+F_Meta_at_birth<-subset(Meta_pip_copy,time==0)
+F_Meta_3_month<-subset(Meta_pip_copy, time ==3)
+F_Meta_12_month<-subset(Meta_pip_copy, time ==12)
+F_Meta_24_month<-subset(Meta_pip_copy, time ==24)
+# summarise data by time and bf to determine the max sample
+summary(F_Meta_at_birth$anyformula_when_sampling)
+#  0  1 
+# 116 22  
+summary(F_Meta_3_month$anyformula_when_sampling)
+#  0  1 
+# 69 54 
+summary(F_Meta_12_month$anyformula_when_sampling)
+# 0   1 
+# 24 135 
+summary(F_Meta_24_month$anyformula_when_sampling)
+# 0  1 
+# 16 82
+AnyFormula_AB<-Power_CI_figure(t, seq(5,20,5), F_Meta_at_birth, "anyformula_when_sampling", 30, 5 )
+AnyFormula_AB$age<-"0"
+AnyFormula_3month<-Power_CI_figure(t, seq(5,50,5), F_Meta_3_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_3month$age<-"3"
+AnyFormula_12month<-Power_CI_figure(t, seq(5,20,5), F_Meta_12_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_12month$age<-"12"
+AnyFormula_24month<-Power_CI_figure(t, seq(5,15,5), F_Meta_24_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_24month$age<-"24"
+AnyFormula_all_time<-rbind(AnyFormula_AB, AnyFormula_3month, AnyFormula_12month, AnyFormula_24month)
+ggplot(AnyFormula_all_time, aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = position_dodge(0.1)) +geom_line(position = position_dodge(0.1)) + geom_point(position = position_dodge(0.1))+ggtitle("All time any formula monte-carlo test for taxa")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+####================Module test===================####
+# read the filtered modules file and modify it to fit the requirement for power test
+# Module<-import_qiime_sample_data("~/2016Projects/Pip/modules.pcl")
+# Module<-as.data.frame(t(Module))
+# Module_filtered<-Module[rownames(Module)%in%Taxonomy_filtered$Sample,]
+t_modules<-Module_filtered[,c(-1:-27)] # remove metadata on top of the datset
+t_modules<-as.data.frame(t(t_modules))
+t_modules[]<- lapply(t_modules, function(x){as.numeric(as.character(x))})
+t_modules[is.na(t_modules)]<-0 # replaced all the NA element in the dataset to 0
+
+# Time test for modules
+Monte_carlo_time_module<-Power_CI_figure(t_modules,seq(5,50,5), Meta_pip, "time", 30, 5 )
+pd <- position_dodge(0.1)
+ggplot(Monte_carlo_time_module,aes(Sampling_depth,mean)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd, color="red") +geom_line(position = pd, color="Blue") + geom_point(position = pd, color="darkblue")+xlab("Sampling_depth")+ylab("Power_mean")+ggtitle("Power test for time with 95% CI (modules)")
+
+## caesar
+caeser_AB_module<-Power_CI_figure(t_modules, seq(5,45,5), Meta_at_birth, "caesar", 30, 5 )
+caeser_AB_module$age<-"0"
+caeser_3month_module<-Power_CI_figure(t_modules, seq(5,35,5), Meta_3_month, "caesar", 30, 5 )
+caeser_3month_module$age<-"3"
+caeser_12month_module<-Power_CI_figure(t_modules, seq(5,45,5), Meta_12_month, "caesar", 30, 5 )
+caeser_12month_module$age<-"12"
+caeser_24month_module<-Power_CI_figure(t_modules, seq(5,20,5), Meta_24_month, "caesar", 30, 5 )
+caeser_24month_module$age<-"24"
+
+Caesar_all_time_module<-rbind(caeser_AB_module,caeser_3month_module,caeser_12month_module,caeser_24month_module)
+Caesar_all_time_module$age<-as.factor(Caesar_all_time_module$age)
+
+ggplot(Caesar_all_time_module,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for Caesar modules without sample replacement") +ylab("Power mean")+ scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+
+## Antibiotics before 6 months
+Anti6_AB_module<-Power_CI_figure(t_modules,seq(5,20,5),Meta_at_birth, "Antibiotics_before_6_months", 30, 5 )
+Anti6_AB_module$age<-"0"
+Anti6_3month_module<-Power_CI_figure(t_modules,seq(5,15,5),Meta_3_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_3month_module$age<-"3"
+Anti6_12month_module<-Power_CI_figure(t_modules,seq(5,20,5),Meta_12_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_12month_module$age<-"12"
+Anti6_24month_module<-Power_CI_figure(t_modules,seq(5,10,5),Meta_24_month, "Antibiotics_before_6_months", 30, 5 )
+Anti6_24month_module$age<-"24"
+
+Anti6_all_time_module<-rbind(Anti6_AB_module,Anti6_3month_module,Anti6_12month_module,Anti6_24month_module)
+Anti6_all_time_module$age<-as.factor(Anti6_all_time_module$age)
+ggplot(Anti6_all_time_module,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for Antibiotics before 6 months for modules (stratify by time) without sample replacement")+ylab("Power mean")+ scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+## Studygroup
+SG_AB_module<-Power_CI_figure(t_modules, seq(5,55,5), SGmeta_AB, "studygroup", 30, 5 )
+SG_AB_module$age<-"0"
+SG_3month_module<-Power_CI_figure(t_modules, seq(5,50,5), SGmeta_3month, "studygroup", 30, 5 )
+SG_3month_module$age<-"3"
+SG_12month_module<-Power_CI_figure(t_modules, seq(5,65,5), SGmeta_12month, "studygroup", 30, 5 )
+SG_12month_module$age<-"12"
+SG_24month_module<-Power_CI_figure(t_modules, seq(5,40,5), SGmeta_24month, "studygroup", 30, 5 )
+SG_24month_module$age<-"24"
+
+SG_all_time_module<-rbind(SG_AB_module,SG_3month_module,SG_12month_module,SG_24month_module)
+SG_all_time_module$age<-as.factor(as.character(SG_all_time_module$age))
+ggplot(SG_all_time_module,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Lactobacillus DR10 & placebo for modules (stratify by time) without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+## Any formular at each timepoint
+AnyFormula_AB_modules<-Power_CI_figure(t_modules, seq(5,20,5), F_Meta_at_birth, "anyformula_when_sampling", 30, 5 )
+AnyFormula_AB_modules$age<-"0"
+AnyFormula_3month_modules<-Power_CI_figure(t_modules, seq(5,50,5), F_Meta_3_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_3month_modules$age<-"3"
+AnyFormula_12month_modules<-Power_CI_figure(t_modules, seq(5,20,5), F_Meta_12_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_12month_modules$age<-"12"
+AnyFormula_24month_modules<-Power_CI_figure(t_modules, seq(5,15,5), F_Meta_24_month, "anyformula_when_sampling", 30, 5 )
+AnyFormula_24month_modules$age<-"24"
+AnyFormula_all_time_modules<-rbind(AnyFormula_AB_modules, AnyFormula_3month_modules, AnyFormula_12month_modules, AnyFormula_24month_modules)
+ggplot(AnyFormula_all_time_modules, aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = position_dodge(0.1)) +geom_line(position = position_dodge(0.1)) + geom_point(position = position_dodge(0.1))+ggtitle("All time any formula monte-carlo test for modules")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+
+#Try Monte carlo on ALPHA diversity (Shannon) for (#caesar, #time, #studygroup, #eczema, #antibiotic #bf), using filtered counts data
+###======================Power test for alpha diversity=========================###
+Meta_pip_counts<-Meta_pip[match(colnames(NZGL_taxonomy_SP_counts1), Meta_pip$Sample),]
+Meta_pip_counts$ageanyformula[is.na(Meta_pip_counts$ageanyformula)]<-104
+Meta_pip_counts$ageanyformula<-(Meta_pip_counts$ageanyformula)/4 # ageanyformula is by weeks and now transformed to by month
+Meta_pip_counts$time<-as.numeric(as.character(Meta_pip_counts$time))
+Meta_pip_counts$anyformula_when_sampling<-ifelse(Meta_pip_counts$ageanyformula>Meta_pip_counts$time, 0, 1)
+Meta_pip_counts$anyformula_when_sampling<-as.factor(Meta_pip_counts$anyformula_when_sampling)
+# subset metadata for further use of time stratefication
+Meta_at_birth_counts<-subset(Meta_pip_counts,time==0)
+Meta_3_month_counts<-subset(Meta_pip_counts, time ==3)
+Meta_12_month_counts<-subset(Meta_pip_counts, time ==12)
+Meta_24_month_counts<-subset(Meta_pip_counts, time ==24)
+# shannon diversity power test for time
+summary(Meta_pip_counts$time)
+pd <- position_dodge(0.1)
+Shannon_time<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,90,5), Meta_pip_counts, "time", 30, 5)
+ggplot(Shannon_time, aes(Sampling_depth, mean)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd, color="red") +geom_line(position = pd, color="blue") + geom_point(position = pd)
+
+# shannon diversity power test for caesar stratified by time
+  # figure out the maximum number of species can be used for each analyses
+summary(Meta_at_birth_counts$caesar)
+# 89 49
+summary(Meta_3_month_counts$caesar)
+# 89 33
+summary(Meta_12_month_counts$caesar)
+# 113  45
+summary(Meta_24_month_counts$caesar)
+# 75 23 
+caeser_AB_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,45,5), Meta_at_birth_counts, "caesar", 30, 5 )
+caeser_AB_counts$age<-"0"
+caeser_3month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,30,5), Meta_3_month_counts, "caesar", 30, 5 )
+caeser_3month_counts$age<-"3"
+caeser_12month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,45,5), Meta_12_month_counts, "caesar", 30, 5 )
+caeser_12month_counts$age<-"12"
+caeser_24month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_24_month_counts, "caesar", 30, 5 )
+caeser_24month_counts$age<-"24"
+caeser_all_time_alpha_diveristy<-rbind(caeser_AB_counts, caeser_3month_counts, caeser_12month_counts, caeser_24month_counts)
+ggplot(caeser_all_time_alpha_diveristy,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for alpha diversity (stratify by time) on caesar without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+# shannon diversity power test for studygroup stratified by time
+  # figure out the maximum number of species can be used for each analyses
+summary(Meta_at_birth_counts$studygroup)
+# bifido DR10 lactob DR20      placeb 
+#       14          58          66 
+summary(Meta_3_month_counts$studygroup)
+# bifido DR10 lactob DR20      placeb 
+#        9          51          62 
+summary(Meta_12_month_counts$studygroup)
+# bifido DR10 lactob DR20      placeb 
+#        16          66          76 
+summary(Meta_24_month_counts$studygroup)
+# bifido DR10 lactob DR20      placeb 
+#        7          43          48
+  # bifido group has very limited number of samples
+  # test with lactob and placeb groups
+Studygroup_meta<-subset(Meta_pip_counts, studygroup != "bifido DR10")
+# reset the factor category studygroup
+Studygroup_meta$studygroup<-as.factor(as.character(Studygroup_meta$studygroup))
+SGmeta_AB<-subset(Studygroup_meta, time =="0")
+SGmeta_3month<-subset(Studygroup_meta, time == "3")
+SGmeta_12month<-subset(Studygroup_meta, time == "12")
+SGmeta_24month<-subset(Studygroup_meta, time =="24")
+
+SG_AB_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,55,5), SGmeta_AB, "studygroup", 30, 5 )
+SG_AB_counts$age<-"0"
+SG_3month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,50,5), SGmeta_3month, "studygroup", 30, 5 )
+SG_3month_counts$age<-"3"
+SG_12month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,65,5), SGmeta_12month, "studygroup", 30, 5 )
+SG_12month_counts$age<-"12"
+SG_24month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,40,5), SGmeta_24month, "studygroup", 30, 5 )
+SG_24month_counts$age<-"24"
+SG_all_time_alpha_diveristy<-rbind(SG_AB_counts, SG_3month_counts, SG_12month_counts, SG_24month_counts)
+ggplot(SG_all_time_alpha_diveristy,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for alpha diversity (stratify by time) on Lactobacillus DR10 & placebo without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+
+# shannon diversity power test on eczema 
+summary(Meta_at_birth_counts$eczema_by_2_years)
+# 114  24 
+summary(Meta_3_month_counts$eczema_by_2_years)
+# 98 24
+summary(Meta_12_month_counts$eczema_by_2_years)
+# 128  30
+summary(Meta_24_month_counts$eczema_by_2_years)
+# 81 17
+eczema_AB_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_at_birth_counts, "eczema_by_2_years", 30, 5 )
+eczema_AB_counts$age<-"0"
+eczema_3month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_3_month_counts, "eczema_by_2_years", 30, 5 )
+eczema_3month_counts$age<-"3"
+eczema_12month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,30,5), Meta_12_month_counts, "eczema_by_2_years", 30, 5 )
+eczema_12month_counts$age<-"12"
+eczema_24month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,15,5), Meta_24_month_counts, "eczema_by_2_years", 30, 5 )
+eczema_24month_counts$age<-"24"
+eczema_all_time_alpha_diveristy<-rbind(eczema_AB_counts, eczema_3month_counts, eczema_12month_counts, eczema_24month_counts)
+ggplot(eczema_all_time_alpha_diveristy,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for alpha diversity (stratify by time) on eczema by 2 years without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+# shannon diversity power test on antibiotics before 6 months 
+summary(Meta_at_birth_counts$Antibiotics_before_6_months)
+# 114  24 
+summary(Meta_3_month_counts$Antibiotics_before_6_months)
+# 98 24
+summary(Meta_12_month_counts$Antibiotics_before_6_months)
+# 128  30
+summary(Meta_24_month_counts$Antibiotics_before_6_months)
+# 81 17
+
+Antibiotics_AB_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_at_birth_counts, "eczema_by_2_years", 30, 5 )
+Antibiotics_AB_counts$age<-"0"
+Antibiotics_3month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_3_month_counts, "eczema_by_2_years", 30, 5 )
+Antibiotics_3month_counts$age<-"3"
+Antibiotics_12month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,30,5), Meta_12_month_counts, "eczema_by_2_years", 30, 5 )
+Antibiotics_12month_counts$age<-"12"
+Antibiotics_24month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,15,5), Meta_24_month_counts, "eczema_by_2_years", 30, 5 )
+Antibiotics_24month_counts$age<-"24"
+Antibiotics_all_time_alpha_diveristy<-rbind(Antibiotics_AB_counts, Antibiotics_3month_counts, Antibiotics_12month_counts, Antibiotics_24month_counts)
+
+ggplot(Antibiotics_all_time_alpha_diveristy,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for alpha diversity (stratify by time) on Antibiotics before 6 months without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+# shannon diveristy power test on any formula
+summary(Meta_at_birth_counts$anyformula_when_sampling)
+# 116  22
+summary(Meta_3_month_counts$anyformula_when_sampling)
+# 68 54
+summary(Meta_12_month_counts$anyformula_when_sampling)
+# 23 135
+summary(Meta_24_month_counts$anyformula_when_sampling)
+# 16 82
+AF_AB_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_at_birth_counts, "anyformula_when_sampling", 30, 5 )
+AF_AB_counts$age<-"0"
+AF_3month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,50,5), Meta_3_month_counts, "anyformula_when_sampling", 30, 5 )
+AF_3month_counts$age<-"3"
+AF_12month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,20,5), Meta_12_month_counts, "anyformula_when_sampling", 30, 5 )
+AF_12month_counts$age<-"12"
+AF_24month_counts<-Shannon_Power_CI_figure(NZGL_taxonomy_SP_counts1, seq(5,15,5), Meta_24_month_counts, "anyformula_when_sampling", 30, 5 )
+AF_24month_counts$age<-"24"
+AF_all_time_alpha_diveristy<-rbind(AF_AB_counts, AF_3month_counts, AF_12month_counts, AF_24month_counts)
+ggplot(AF_all_time_alpha_diveristy,aes(Sampling_depth,mean, colour=age)) + geom_errorbar(aes(ymin=CI_low, ymax=CI_high), width = 0.1, position = pd) +geom_line(position = pd) + geom_point(position = pd)+ggtitle("Power test for alpha diversity (stratify by time) on any formula when sampling without sample replacement")+ylab("Power mean")+scale_color_manual(values=c("#551A8B", "#E69F00", "#56B4E9","#FF4500"))
+
+
+```

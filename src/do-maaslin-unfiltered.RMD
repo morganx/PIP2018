@@ -12,12 +12,12 @@ e.g. perl ~/PIP2018/src/fix_maaslin_kegg.pl ~/PIP2018/multivariate/final_mod/fil
 ```{r}
 library("Maaslin")
 #modules
-  Maaslin("~/PIP2018/primary_data/modules.tsv", strOutputDIR = "~/PIP2018/multivariate/unfiltered_data/unfiltered_mod", strInputConfig = "~/PIP2018/multivariate/unfiltered_data/modules.read.config", strForcedPredictors = "time")
+  Maaslin("~/PIP2018/primary_data/modules.tsv", strOutputDIR = "~/PIP2018/results/multivariate/unfiltered_data/unfiltered_mod", strInputConfig = "~/PIP2018/results/multivariate/unfiltered_data/modules.read.config", strForcedPredictors = "time")
 
 #pathways
-Maaslin("~/PIP2018/primary_data/pathways.tsv", strOutputDIR = "~/PIP2018/multivariate/unfiltered_data/unfiltered_pwy", strInputConfig = "~/PIP2018/multivariate//unfiltered_data/pwys.read.config", strForcedPredictors = "time" )
+Maaslin("~/PIP2018/primary_data/pathways.tsv", strOutputDIR = "~/PIP2018/results/multivariate/unfiltered_data/unfiltered_pwy", strInputConfig = "~/PIP2018/results/multivariate//unfiltered_data/pwys.read.config", strForcedPredictors = "time" )
 
 
-Maaslin("~/PIP2018/primary_data/taxonomy.tsv", strOutputDIR = "~/PIP2018/multivariate/unfiltered_data/unfiltered_tax", strInputConfig = "~/PIP2018/multivariate/unfiltered_data/tax.read.config", strForcedPredictors = "time")
+Maaslin("~/PIP2018/primary_data/taxonomy.tsv", strOutputDIR = "~/PIP2018/results/multivariate/unfiltered_data/unfiltered_tax", strInputConfig = "~/PIP2018/results/multivariate/unfiltered_data/tax.read.config", strForcedPredictors = "time")
 
 ````

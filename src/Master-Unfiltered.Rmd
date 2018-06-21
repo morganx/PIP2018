@@ -86,7 +86,7 @@ c<-ggplot(Escherichia_Meta, aes(color=factor(time), x=Measurement_of_time, y=Esc
 
 ggarrange(a, b, c, labels=c("A", "B", "C", "D"), ncol=2, nrow=2)
 
-ggsave("~/PIP2018/results/unfiltered-SupFig1.pdf", plot = last_plot(), device = NULL, path = NULL,
+ggsave("~/PIP2018/results/SupFig1-unfiltered.pdf", plot = last_plot(), device = NULL, path = NULL,
   scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
   dpi = 300, limitsize = FALSE)
 
@@ -207,7 +207,7 @@ top_abundant_40_dataset$max_time<-as.factor(top_abundant_40_dataset$max_time)
 
 ggplot(top_abundant_40_dataset, aes(taxo_trim, Estimate, color=max_time)) + geom_errorbar(aes(ymin=top_abundant_40_dataset$Estimate-top_abundant_40_dataset$`Std. Error`, ymax=top_abundant_40_dataset$Estimate+top_abundant_40_dataset$`Std. Error`,width=.3)) + geom_point(shape=21, size=1, fill="white") + theme_bw() + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 10), legend.position="top")+ geom_hline(aes(yintercept=0), colour="black", linetype="dashed")+ylim(-0.1,0.1)+ scale_color_manual(values=c("#E69F00", "#56B4E9", "#FF4500","#551A8B"))
 
-ggsave("~/PIP2018/results/unfiltered-Fig2A.pdf", plot = last_plot(), device = NULL, path = NULL,
+ggsave("~/PIP2018/results/Fig2A-unfiltered.pdf", plot = last_plot(), device = NULL, path = NULL,
   scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
   dpi = 300, limitsize = FALSE)
 ```
@@ -317,8 +317,8 @@ ggsave("~/PIP2018/results/Fig2B-unfiltered.pdf", plot = last_plot(), device = NU
   scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
   dpi = 300, limitsize = FALSE)
 
-#keep<-subset(Module_rainbow, Module_rainbow$`Pr(>|t|)` <= 0.05)
-#write.csv(keep, file="~/PIP2018/results/suptable2-unfiltered-mods.csv")
+keep<-subset(Module_rainbow, Module_rainbow$`Pr(>|t|)` <= 0.05)
+write.csv(keep, file="~/PIP2018/results/suptable2-unfiltered-mods.csv")
 
 #write.csv(Module_filtered, "~/PIP2018/derived-data/modules-filtered.csv")
 ```
@@ -519,7 +519,6 @@ biff<-cbind(Taxonomy_filtered$time, as.character(Taxonomy_filtered$studygroup), 
 biff<-as.data.frame(biff)
 colnames(biff) = c("time", "studygroup", "b.animalis", "l.rhamnosus")
 
-levels(biff$time) = c(0, 3, 12, 24)
 biff$studygroup = factor(biff$studygroup)
 
 
@@ -529,12 +528,20 @@ biff$studygroup = gsub("bifido DR10", "b.lactis HN019", biff$studygroup)
 biff$studygroup = gsub("lactob DR20", "l.rhamnosus HN001", biff$studygroup)
 biff$studygroup = gsub("placeb", "placebo", biff$studygroup)
 
-c<-ggplot(biff, aes(y=log(b.animalis), x=studygroup, color=studygroup))
-c<- c + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
-d<-ggplot(biff, aes(y=log(l.rhamnosus), x=studygroup, color=studygroup))
+
+biff$time = gsub("0", "0 months", biff$time)
+biff$time = gsub("3", "3 months", biff$time)
+biff$time = gsub("12", "12 months", biff$time)
+biff$time = gsub("24", "24 months", biff$time)
+biff$time <- factor(biff$time, levels = c("0 months", "3 months", "12 months", "24 months"))
+
+c<-ggplot(biff, aes(y=b.animalis, x=studygroup, color=studygroup))
+c<- c + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif", label.y=c(1.75, 1.75, 1.75, 1.75)) + coord_cartesian(ylim=c(0, 1.75)) 
+d<-ggplot(biff, aes(y=l.rhamnosus, x=studygroup, color=studygroup))
           
-d<-d + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif")
+d<-d + geom_boxplot() + geom_jitter(width=0.25) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) + facet_wrap(~time)+ stat_compare_means(ref.group="placebo", method="wilcox.test", label="p.signif", label.y=c(5, 5, 5, 5)) + coord_cartesian(ylim=c(0, 5)) 
 ggarrange(c, d, labels=c("A", "B"), common.legend=TRUE)
+
 
 ggsave("~/PIP2018/results/SupFig3-unfiltered.pdf", plot = last_plot(), device = NULL, path = NULL,
   scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
@@ -585,6 +592,7 @@ m1$studygroup = gsub("bifido DR10", "b.lactis HN019", biff$studygroup)
 m1$studygroup = gsub("lactob DR20", "l.rhamnosus HN001", biff$studygroup)
 m1$studygroup = gsub("placeb", "placebo", biff$studygroup)
 m1$studygroup = factor(m1$studygroup)
+m1$time <- factor(m1$time, levels = c("0", "3", "12", "24"))
 m1$M00198 = as.numeric(as.character(m1$M00198))
 m1$M00277 = as.numeric(as.character(m1$M00277))
 m1$ko00531 = as.numeric(as.character(m1$ko00531))

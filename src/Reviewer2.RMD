@@ -1,0 +1,211 @@
+---
+title: "Reviewer Questions"
+author: "XCM & Cecilia Wang"
+date: "30 May 2018"
+output:
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(plyr)
+library(tidyr)
+library(broom)
+library(phyloseq)
+library(reshape2)
+library(ggplot2)
+library(stringr)
+library(microbiome)
+library(ggpubr)
+
+setwd("~/PIP2018")
+
+```
+
+1. Load and filter primary taxonomy data
+```{r}
+#Piece of code for loading taxonomy.tsv / modules.pcl / pathways.pcl and calculating bad samples.
+# E. coli IQR is calculated for each age group, and  with > 1.5 IQR for each age group are filtered out
+
+NZGL_taxonomy<-import_qiime_sample_data("~/PIP2018/primary_data/taxonomy.tsv")
+  
+# the imported taxonomy data should have each sample as a row and each variable or taxonomy as a column
+Taxonomy_filter_file<-NZGL_taxonomy # make a copy
+
+NZGL_taxonomy$time<-as.factor(NZGL_taxonomy$time) 
+
+
+# Find the interquartile range for E. coli &filter out samples with E. coli abundance  > 1.5 IQR
+Taxonomy_filter_file$E_coli<-NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli
+# Split the dataset by time/age
+E_coli_abundance_AtBirth<-subset(Taxonomy_filter_file, time==0)
+E_coli_abundance_3_month<-subset(Taxonomy_filter_file, time==3)
+E_coli_abundance_12_month<-subset(Taxonomy_filter_file, time==12)
+E_coli_abundance_24_month<-subset(Taxonomy_filter_file, time==24)
+
+# Calculate IQR by each time
+E_coli_abundance_IOR_AtBirth<-IQR(E_coli_abundance_AtBirth$E_coli)
+E_coli_abundance_IQR_3_month<-IQR(E_coli_abundance_3_month$E_coli)
+E_coli_abundance_IQR_12_month<-IQR(E_coli_abundance_12_month$E_coli)
+E_coli_abundance_IQR_24_month<-IQR(E_coli_abundance_24_month$E_coli)
+
+# Filter the whole dataset at each time on E.coli > 1.5IQR
+Taxonomy_filtered_AtBirth<-subset(E_coli_abundance_AtBirth, E_coli<=(1.5*E_coli_abundance_IOR_AtBirth))
+Taxonomy_filtered_3_month<-subset(E_coli_abundance_3_month, E_coli<=(1.5*E_coli_abundance_IQR_3_month))
+Taxonomy_filtered_12_month<-subset(E_coli_abundance_12_month, E_coli<=(1.5*E_coli_abundance_IQR_12_month))
+Taxonomy_filtered_24_month<-subset(E_coli_abundance_24_month, E_coli<=(1.5*E_coli_abundance_IQR_24_month))
+Taxonomy_filtered<-rbind(Taxonomy_filtered_AtBirth,Taxonomy_filtered_3_month,Taxonomy_filtered_12_month,Taxonomy_filtered_24_month) # a fully filtered data from each timepoint combined into one dataset
+```
+
+
+Review question - is b. animalis different in formula vs bf infants?
+```{r}
+meta<-read.table("~/PIP2018/primary_data/bf.txt", header=TRUE, sep="\t")
+Taxonomy_filtered$bf <-meta$bfduration[match(Taxonomy_filtered$Studyid, meta$Studyid)]
+Taxonomy_filtered$formula<-meta$ageanyformula[match(Taxonomy_filtered$Studyid, meta$Studyid)]
+
+#Bind only the data we care about to answer this question
+gg<-cbind( Taxonomy_filtered$k__Bacteria.p__Actinobacteria.c__Actinobacteria.o__Bifidobacteriales.f__Bifidobacteriaceae.g__Bifidobacterium.s__Bifidobacterium_animalis,  Taxonomy_filtered$bf, Taxonomy_filtered$formula, Taxonomy_filtered$time, Taxonomy_filtered$studygroup )
+
+colnames(gg) = c("B.animalis", "bfduration", "formula", "time", "studygroup")
+gg<-as.data.frame(gg)
+
+#Define "formulanow" by comparing age at which formula was first used in weeks (NA=never) to time at which sample was taken -> "Has baby ever had formula at time this sample was collected?"
+
+gg = within(gg, {
+formulanow = ifelse(formula/4.3 <= as.numeric(as.character(time)), 1, 0)
+})
+
+#Summarize formulanow by time & studygroup
+ddply(gg,~time + studygroup,summarise, T=length(which(formulanow==1)), F=length(which(formulanow==0)) + length(which(is.na(formulanow))))
+
+#Since all the NAs are equivalent to "No" & power is better if we don't split them, combine them so either N or NA = 0.
+gg$formulanow<-ifelse(is.na(gg$formula), 0, ifelse(gg$formulanow==1, 1, 0))
+
+
+# is there a difference in B. animalis x formula exposure, stratified by time + treatment?
+gg %>%
+  group_by(time, studygroup) %>%
+  do(tidy(wilcox.test(B.animalis ~ formulanow, data= .)))
+# is there a difference in B. animalis x formula exposure, stratified by time?
+gg %>%
+  group_by(time) %>%
+  do(tidy(wilcox.test(B.animalis ~ formulanow, data= .)))
+
+
+
+#What's mean abundance of B. animalis in each stratified group?
+#time only
+ddply(gg,~time,summarise,mean=mean(B.animalis))
+# time x studygroup
+ddply(gg,~time + studygroup,summarise,mean=mean(B.animalis))
+#time x studygroup x formula use
+ddply(gg,~time + studygroup + formulanow,summarise,mean=mean(B.animalis))
+
+ggplot(gg, aes(x=as.factor(formulanow), y=log(B.animalis), fill=factor(studygroup))) + geom_boxplot() + geom_jitter() + facet_wrap(~time)
+
+
+
+```
+
+Reviewer question - does feeding influence E. coli? Using unfiltered data
+```{r}
+#analyze only data we're interested in
+foo<-cbind(NZGL_taxonomy$k__Bacteria.p__Proteobacteria.c__Gammaproteobacteria.o__Enterobacteriales.f__Enterobacteriaceae.g__Escherichia.s__Escherichia_coli,as.character(NZGL_taxonomy$time), as.character(NZGL_taxonomy$studygroup),as.character(as.character(NZGL_taxonomy$Studyid)))
+foo<-as.data.frame(foo)
+foo$V1 = as.numeric(as.character(foo$V1))
+colnames(foo) = c("E.coli", "time", "studygroup", "Studyid")
+
+#add bf + formula data
+foo$bf <-meta$bfduration[match(foo$Studyid, meta$Studyid)]
+foo$formula<-meta$ageanyformula[match(foo$Studyid, meta$Studyid)]
+
+#Examine the subset for which bf metadata isn't missing (32 samples)
+bar<-subset(foo, !is.na(foo$bf))
+
+#make formulanow variable
+bar = within(bar, {formulanow = ifelse(is.na(formula), 0, ifelse(formula/4.3 <= as.numeric(as.character(time)), 1, 0))})
+
+# plot E. coli abundance stratified by formula use, studygroup, and time
+ggplot(bar, aes(x=as.factor(formulanow), y=log(E.coli), colour=studygroup)) + geom_boxplot() + geom_jitter() + facet_wrap(~time)
+
+#is there difference in e. coli x formula stratified by time & studygroup?
+bar %>%
+  group_by(time, studygroup) %>%
+  do(tidy(wilcox.test(E.coli ~ formulanow, data= .)))
+# is there a difference in Ecoli x formula exposure, stratified by time?
+bar %>%
+  group_by(time) %>%
+  do(tidy(wilcox.test(E.coli ~ formulanow, data= .)))
+
+
+```
+
+Make barplot fig
+```{r}
+#send to physeq
+Taxonomy_filtered_num<-NZGL_taxonomy[,c(-1:-28)]
+meta<-NZGL_taxonomy[,1:28]
+phy<-otu_table(t(Taxonomy_filtered_num), taxa_are_rows = TRUE)
+a<-rownames(phy)
+b<-str_split_fixed(a, "\\.", 8)
+c<-tax_table(b)
+colnames(c) = c("domain", "phylum", "class", "order", "family", "genus", "species", "strain")
+rownames(phy) = rownames(c)
+ps<-phyloseq(phy, c)
+sample_data(ps) = meta
+# keep only genus level defined taxa
+g<-which(tax_table(ps)[,6] != "")
+h<-rownames(tax_table(ps))[g]
+i<-prune_taxa(h, ps)
+
+#ignore species & strain
+j<-which(tax_table(i)[,7] == "")
+k<-rownames(tax_table(i))[j]
+l<-prune_taxa(k, ps)
+
+#glom to family
+l_class <- l %>%
+  tax_glom(taxrank = "family") 
+
+#get the 20 most abundant families
+F20 = names(sort(taxa_sums(l_class), TRUE)[1:20])
+pruned = prune_taxa(F20, l_class)
+
+# design a less-disgusting color palette
+Mycolors <- colorRampPalette(brewer.pal(12, "Paired"))(colourCount)
+names(Mycolors) <- levels(as.factor(rownames(otu_table(pruned))))
+
+
+pseq <- subset_samples(pruned, time==0)
+a<-plot_composition(pseq, x.label="time", plot.type="barplot", sample.sort="neatmap") 
+first<-a + scale_fill_manual( values=Mycolors, labels=tax_table(pseq)[,5]) + ggtitle("Birth (n=176)") + guides(fill = guide_legend(keywidth = 1, keyheight = 0.5)) +
+theme(axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+
+pseq <- subset_samples(pruned, time==3)
+a<-plot_composition(pseq, x.label="time", plot.type="barplot", sample.sort="neatmap") 
+second<-a + scale_fill_manual( values=Mycolors, labels=tax_table(pseq)[,5]) + ggtitle("3 months (n=155)") + guides(fill = guide_legend(keywidth = 1, keyheight = 0.5)) +
+theme(axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+
+pseq <- subset_samples(pruned, time==12)
+a<-plot_composition(pseq, x.label="time", plot.type="barplot", sample.sort="neatmap") 
+third<-a + scale_fill_manual( values=Mycolors, labels=tax_table(pseq)[,5]) + ggtitle("12 months (n=194)") + guides(fill = guide_legend(keywidth = 1, keyheight = 0.5)) +
+theme(axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+
+pseq <- subset_samples(pruned, time==24)
+a<-plot_composition(pseq, x.label="time", plot.type="barplot", sample.sort="neatmap") 
+fourth<-a + scale_fill_manual( values=Mycolors, labels=tax_table(pseq)[,5]) + ggtitle("24 months (n=121)") + guides(fill = guide_legend(keywidth = 1, keyheight = 0.5)) +
+theme(axis.text.x=element_blank(),axis.ticks.x=element_blank())
+
+ggarrange(first, second, third, fourth, labels=c("A", "B", "C", "D"), ncol=2, nrow=2, common.legend=TRUE, legend="bottom")
+
+ggsave("~/PIP2018/results/stupid_barplots.pdf", plot = last_plot(), device = NULL, path = NULL,
+  scale = 1, width = 9, height = 6, units = c("in", "cm", "mm"),
+  dpi = 300, limitsize = FALSE)
+
+
+
+```

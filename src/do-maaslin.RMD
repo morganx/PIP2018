@@ -1,21 +1,26 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # Note: requires nlme version 3-1.127 (higher versions mess up pvalues/qvalues for random effects)
 # and requires gam version 1.14
 To generate Maaslin analysis results, run this file. 
 
 After generating files, use /src/fix_maaslin_kegg.pl to add KEGG descriptions to the Maaslin KEGG output.
 
-e.g. perl ~/PIP2018/src/fix_maaslin_kegg.pl ~/PIP2018/multivariate/final_mod/filtered.modules.txt > filtered_modules.fixed.txt
+e.g. perl ~/PIP2018/src/fix_maaslin_kegg.pl ~/PIP2018/results/multivariate/final_mod/filtered.modules.txt > filtered_modules.fixed.txt
 
 
 ```{r}
 library("Maaslin")
 #modules
-Maaslin("~/PIP2018/primary_data/filtered_modules.tsv", strOutputDIR = "~/PIP2018/multivariate/final_mod", strInputConfig = "~/PIP2018/multivariate/modules.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid" )
+Maaslin("~/PIP2018/primary_data/filtered_modules.tsv", strOutputDIR = "~/PIP2018/results/multivariate/final_mod", strInputConfig = "~/PIP2018/results/multivariate/modules.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid" )
 
 #pathways
-Maaslin("~/PIP2018/primary_data/filtered_pathways.tsv", strOutputDIR = "~/PIP2018/multivariate/final_pwy", strInputConfig = "~/PIP2018/multivariate/pwys.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid" )
+Maaslin("~/PIP2018/primary_data/filtered_pathways.tsv", strOutputDIR = "~/PIP2018/results/multivariate/final_pwy", strInputConfig = "~/PIP2018/results/multivariate/pwys.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid" )
 
 #taxonomy
-Maaslin("~/PIP2018/primary_data/filtered_taxonomy.tsv", strOutputDIR = "~/PIP2018/multivariate/final_tax", strInputConfig = "~/PIP2018/multivariate/tax.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid")
+Maaslin("~/PIP2018/primary_data/filtered_taxonomy.tsv", strOutputDIR = "~/PIP2018/results/multivariate/final_tax", strInputConfig = "~/PIP2018/results/multivariate/tax.read.config", strForcedPredictors = "time", strRandomCovariates = "Studyid")
 
 ````
