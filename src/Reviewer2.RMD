@@ -16,6 +16,7 @@ library(reshape2)
 library(ggplot2)
 library(stringr)
 library(microbiome)
+library(RColorBrewer)
 library(ggpubr)
 
 setwd("~/PIP2018")
@@ -167,13 +168,13 @@ l<-prune_taxa(k, ps)
 #glom to family
 l_class <- l %>%
   tax_glom(taxrank = "family") 
-
+tax_table(l_class) = tax_table(l_class)[,1:5]
 #get the 20 most abundant families
 F20 = names(sort(taxa_sums(l_class), TRUE)[1:20])
 pruned = prune_taxa(F20, l_class)
 
 # design a less-disgusting color palette
-Mycolors <- colorRampPalette(brewer.pal(12, "Paired"))(colourCount)
+Mycolors <- colorRampPalette(brewer.pal(12, "Paired"))(20)
 names(Mycolors) <- levels(as.factor(rownames(otu_table(pruned))))
 
 
